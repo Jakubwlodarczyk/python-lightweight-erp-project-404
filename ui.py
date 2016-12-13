@@ -53,9 +53,9 @@ def print_result(result, label):
 
             print(str(res) + "\n")
     if type(result) == dict:
-        print(label + ":")
-        for item, value in result:
-            print("{}: {}".format(item, value))
+        print('{} {}'.format(label, 'Sum:'))
+        for item in result:
+            print('{} {}'.format(item, result[item]))
 
 
 def print_menu(title, list_options, exit_message):
