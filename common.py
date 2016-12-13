@@ -36,7 +36,7 @@ def generate_random(table):
         for i in range(2):
             generated += str(special_chars[random.randint(0, len(special_chars)-1)])
             generated += str(digits[random.randint(0, len(digits)-1)])
-            generated += str(alphabet[random.randint(0, len(alphabet)-1)])
+            generated += str(alphabet[random.randint(0, len(alphabet)-1)])g
             generated += str(alphabet[random.randint(0, len(alphabet)-1)].upper())
         if generated in id_table:
             is_unique = False
