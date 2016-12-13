@@ -20,9 +20,25 @@ def generate_random(table):
     Returns:
         Random and unique string
     """
+    special_chars = ['!', '@', '#', '$', '%', '^', '&', '*']
+    digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+                'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
     generated = ''
+    is_unique = False
+    id_table = []
+    for row in table:
+        id_table.append(row[0])
 
-    # your code
-
+    while not is_unique:
+        is_unique = True
+        for i in range(2):
+            generated += str(special_chars[random.randint(0, len(special_chars)-1)])
+            generated += str(digits[random.randint(0, len(digits)-1)])
+            generated += str(alphabet[random.randint(0, len(alphabet)-1)])
+            generated += str(alphabet[random.randint(0, len(alphabet)-1)].upper())
+        if generated in id_table:
+            is_unique = False
+        print(generated)
     return generated

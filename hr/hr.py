@@ -5,14 +5,14 @@
 # birth_date: number (year)
 
 
-# importing everything you need
+"""# importing everything you need
 import os
 # User interface module
 import ui
 # data manager module
 import data_manager
 # common module
-import common
+import common"""
 
 
 def start_module():
@@ -102,16 +102,34 @@ def update(table, id_):
 # the question: Who is the oldest person ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_oldest_person(table):
-
-    # your code
-
-    pass
-
+    """ Searching for oldest persons in table, return string of names """
+    oldest_year = min([int(year[2]) for year in table])  # search for oldest year
+    oldest_person = []
+    i = 0
+    while i < len(table):
+        if int(table[i][2]) == oldest_year:
+            oldest_person.append(table[i][1])
+        i += 1
+    return oldest_person
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
+
+
 def get_persons_closest_to_average(table):
+    """ Searching for closest persons to average year in table, return string of names """
+    average = 0
+    for year in table:
+        average += int(year[2])  # sum of years
+    average = round(average/len(table))  # average year
 
-    # your code
+    list_of_abs = [abs(int(person[2])-average) for person in table]  # make list of substract years with same index
+    min_from_abs = min(list_of_abs)
+    closest_person = []
 
-    pass
+    i = 0
+    while i < len(table):
+        if list_of_abs[i] == min_from_abs:
+            closest_person.append(table[i][1])
+        i += 1
+    return closest_person
