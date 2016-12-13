@@ -163,11 +163,16 @@ def update(table, id_):
                    'Amount']
     # your code
     i = 0
-    new_row = ui.get_inputs(list_labels, 'New Value:')
+    count = 0
     while i < len(table):
         if str(id_[0]) == str(table[i][0]):
+            new_row = ui.get_inputs(list_labels, 'New Value:')
             new_row.insert(0, table[i][0])
-            table[i] = new_row
+            for item in range(len(table[i]) - 1):
+                if list_labels[count] != '':
+                    table[i][count] = new_row[count]
+                count += 1
+        i += 1
     print(table)
     return table
 
@@ -196,7 +201,7 @@ def which_year_max(table):
         if v > profit:
             profit = v
             year = k
-    return(str(year))
+    return str(year)
 
 
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
