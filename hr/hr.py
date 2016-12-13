@@ -5,14 +5,14 @@
 # birth_date: number (year)
 
 
-"""# importing everything you need
+# importing everything you need
 import os
 # User interface module
 import ui
 # data manager module
 import data_manager
 # common module
-import common"""
+import common
 
 
 def start_module():
@@ -24,10 +24,36 @@ def start_module():
     Returns:
         None
     """
+    table = data_manager.get_table_from_file('hr/persons.csv')
+    options = [
+        'Show Table',
+        'Add to Table',
+        'Remove from Table',
+        'Update Table',
+        'Get oldest person',
+        'Get persons closest to average']
 
-    # your code
+    while True:
+        ui.print_menu('HR menu', options, 'Back to main menu')
 
-    pass
+        inputs = ui.get_inputs(['Enter the number'], '')
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            add(table)
+        elif option == "3":
+            remove(table, id_)
+        elif option == "4":
+            update(table, id_)
+        elif option == "5":
+            get_oldest_person(table)
+        elif option == "6":
+            get_persons_closest_to_average(table)
+        elif option == "0":
+            break
+        else:
+            raise KeyError("There is no such option.")
 
 
 def show_table(table):
@@ -40,10 +66,8 @@ def show_table(table):
     Returns:
         None
     """
-
-    # your code
-
-    pass
+    title_list = ['Id', 'Name', 'Year']
+    ui.print_table(table[:], title_list)
 
 
 def add(table):
@@ -110,7 +134,7 @@ def get_oldest_person(table):
         if int(table[i][2]) == oldest_year:
             oldest_person.append(table[i][1])
         i += 1
-    return oldest_person
+    ui.print_result(oldest_person, "Oldest persons")
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
@@ -132,4 +156,4 @@ def get_persons_closest_to_average(table):
         if list_of_abs[i] == min_from_abs:
             closest_person.append(table[i][1])
         i += 1
-    return closest_person
+    ui.print_result(closest_person, "Closest persons to average year")
