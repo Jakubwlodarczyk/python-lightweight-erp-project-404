@@ -30,6 +30,7 @@ def print_table(table, title_list):
     for item in table:
         print("-"*(sum_of_col+len(columns_max_lenght)*2))
         print(item)
+    del table[0]
 
 
 def print_result(result, label):
