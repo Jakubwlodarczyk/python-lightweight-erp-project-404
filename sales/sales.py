@@ -81,9 +81,23 @@ def add(table):
     Returns:
         Table with a new record
     """
-
-    # your code
-
+    user_input = ["Title", "Price", "Month", "Day", "Year"]
+    title = "Please input required data"
+    is_correct_input = False
+    while not is_correct_input:
+        inputs = ui.get_inputs(user_input, title)
+        try:
+            test = int(inputs[1]) + int(inputs[2]) + int(inputs[3]) + int(inputs[4])
+        except ValueError:
+            ui.print_error_message("Incorect input. Please try again.")
+            continue
+        if int(inputs[2]) > 12 or int(inputs[3]) > 31 or int(inputs[4]) > 2100:
+            ui.print_error_message("Incorect date. Please try again.")
+            continue
+        is_correct_input = True
+    id_ = common.generate_random(table)
+    inputs.insert(0, id_)
+    table.append(inputs)
     return table
 
 

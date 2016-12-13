@@ -40,5 +40,4 @@ def generate_random(table):
             generated += str(alphabet[random.randint(0, len(alphabet)-1)].upper())
         if generated in id_table:
             is_unique = False
-        print(generated)
     return generated
