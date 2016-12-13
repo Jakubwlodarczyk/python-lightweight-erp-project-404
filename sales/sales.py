@@ -68,7 +68,7 @@ def show_table(table):
     Returns:
         None
     """
-    
+
 
     pass
 
