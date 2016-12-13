@@ -36,8 +36,18 @@ def generate_random(table):
         for i in range(2):
             generated += str(special_chars[random.randint(0, len(special_chars)-1)])
             generated += str(digits[random.randint(0, len(digits)-1)])
-            generated += str(alphabet[random.randint(0, len(alphabet)-1)])
+            generated += str(alphabet[random.randint(0, len(alphabet)-1)])g
             generated += str(alphabet[random.randint(0, len(alphabet)-1)].upper())
         if generated in id_table:
             is_unique = False
     return generated
+
+
+def mean_from_list(num_list):
+    num_sum = 0
+    for num in num_list: #making sum of number in list
+        num_sum += int(num)
+    mean = num_sum / len(num_list) #dividing by
+    if mean.is_integer():
+        mean = int(mean)
+    return mean
