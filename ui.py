@@ -28,7 +28,7 @@ def print_table(table, title_list):
     table = [to_format.format(*row) for row in s]
     sum_of_col = sum(columns_max_lenght)
     for item in table:
-        print("-"*(sum_of_col+len(columns_max_lenght)*2))
+        print("-" * (sum_of_col + len(columns_max_lenght) * 2))
         print(item)
     del table[0]
 
