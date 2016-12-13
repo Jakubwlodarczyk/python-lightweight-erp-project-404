@@ -26,7 +26,36 @@ def start_module():
         None
     """
 
-    # your code
+    table = data_manager.get_table_from_file('store/games_test.csv')
+    options = [
+        'Show Table',
+        'Add to Table',
+        'Remove from Table',
+        'Update Table',
+        'Get count by manufactures',
+        'Get average by manufacturer']
+
+    while True:
+        ui.print_menu('Store menu', options, 'Back to main menu')
+
+        inputs = ui.get_inputs(['Enter the number'], '')
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            add(table)
+        elif option == "3":
+            remove(table, id_)
+        elif option == "4":
+            update(table, id_)
+        elif option == "5":
+            get_counts_by_manufacturers(table)
+        elif option == "6":
+            get_average_by_manufacturer(table, manufacturer)
+        elif option == "0":
+            break
+        else:
+            raise KeyError("There is no such option.")
 
     pass
 
@@ -41,8 +70,8 @@ def show_table(table):
     Returns:
         None
     """
-
-    # your code
+    title_list = ['Id', 'Title', 'Manufacturer', 'Price', 'In_stock']
+    ui.print_table(table, title_list)
 
     pass
 
@@ -58,8 +87,6 @@ def add(table):
         Table with a new record
     """
 
-    # your code
-
     return table
 
 
@@ -74,8 +101,6 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
-
-    # your code
 
     return table
 
