@@ -27,7 +27,7 @@ def start_module():
         None
     """
 
-    # you code
+
 
     pass
 
@@ -116,17 +116,13 @@ def get_available_items(table):
 # @table: list of lists
 
 def get_average_durability_by_manufacturers(table):
-    aver_dur_dict = {}
+    aver_durability_dict = {}
     for item in table:
-        if item[-3] in aver_dur_dict:
-            aver_dur_dict[item[-3]].append(int(item[-1]))
+        if item[-3] in aver_durability_dict:
+            aver_durability_dict[item[-3]].append(int(item[-1]))
         else:
-            aver_dur_dict[item[-3]] = [item[-1]]
-    print(aver_dur_dict)
-    for manuf in aver_dur_dict:
-        if len(aver_dur_dict[manuf]) != 1:
+            aver_durability_dict[item[-3]] = [item[-1]]
+    for manufacturer in aver_durability_dict:
+        aver_durability_dict[manufacturer] = common.mean_from_list(aver_durability_dict[manufacturer])
 
-            aver_dur_dict[manuf] = [aver_dur_dict[manuf][i] + aver_dur_dict[manuf][i+1] for i in range(len(aver_dur_dict[manuf])-1)][0]/(len(aver_dur_dict[manuf]))
-        else:
-            aver_dur_dict[manuf] = aver_dur_dict[manuf][0]
-    return aver_dur_dict
+    return aver_durability_dict
