@@ -24,10 +24,36 @@ def start_module():
     Returns:
         None
     """
+    table = data_manager.get_table_from_file('hr/persons.csv')
+    options = [
+        'Show Table',
+        'Add to Table',
+        'Remove from Table',
+        'Update Table',
+        'Get oldest person',
+        'Get persons closest to average']
 
-    # your code
+    while True:
+        ui.print_menu('HR menu', options, 'Back to main menu')
 
-    pass
+        inputs = ui.get_inputs(['Enter the number'], '')
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            add(table)
+        elif option == "3":
+            remove(table, id_)
+        elif option == "4":
+            update(table, id_)
+        elif option == "5":
+            get_oldest_person(table)
+        elif option == "6":
+            get_persons_closest_to_average(table)
+        elif option == "0":
+            break
+        else:
+            raise KeyError("There is no such option.")
 
 
 def show_table(table):
@@ -40,10 +66,8 @@ def show_table(table):
     Returns:
         None
     """
-
-    # your code
-
-    pass
+    title_list = ['Id', 'Name', 'Year']
+    ui.print_table(table[:], title_list)
 
 
 def add(table):
@@ -102,16 +126,34 @@ def update(table, id_):
 # the question: Who is the oldest person ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_oldest_person(table):
-
-    # your code
-
-    pass
-
+    """ Searching for oldest persons in table, return string of names """
+    oldest_year = min([int(year[2]) for year in table])  # search for oldest year
+    oldest_person = []
+    i = 0
+    while i < len(table):
+        if int(table[i][2]) == oldest_year:
+            oldest_person.append(table[i][1])
+        i += 1
+    ui.print_result(oldest_person, "Oldest persons")
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
+
+
 def get_persons_closest_to_average(table):
+    """ Searching for closest persons to average year in table, return string of names """
+    average = 0
+    for year in table:
+        average += int(year[2])  # sum of years
+    average = round(average/len(table))  # average year
 
-    # your code
+    list_of_abs = [abs(int(person[2])-average) for person in table]  # make list of substract years with same index
+    min_from_abs = min(list_of_abs)
+    closest_person = []
 
-    pass
+    i = 0
+    while i < len(table):
+        if list_of_abs[i] == min_from_abs:
+            closest_person.append(table[i][1])
+        i += 1
+    ui.print_result(closest_person, "Closest persons to average year")

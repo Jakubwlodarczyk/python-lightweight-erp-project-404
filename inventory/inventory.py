@@ -106,18 +106,27 @@ def update(table, id_):
 #
 # @table: list of lists
 def get_available_items(table):
-
-    # your code
-
-    pass
+    import datetime
+    return list(filter(lambda x: int(x[-1])+int(x[-2]) >= datetime.date.today().year, table))
 
 
 # the question: What are the average durability times for each manufacturer?
 # return type: a dictionary with this structure: { [manufacturer] : [avg] }
 #
 # @table: list of lists
+
 def get_average_durability_by_manufacturers(table):
+    aver_dur_dict = {}
+    for item in table:
+        if item[-3] in aver_dur_dict:
+            aver_dur_dict[item[-3]].append(int(item[-1]))
+        else:
+            aver_dur_dict[item[-3]] = [item[-1]]
+    print(aver_dur_dict)
+    for manuf in aver_dur_dict:
+        if len(aver_dur_dict[manuf]) != 1:
 
-    # your code
-
-    pass
+            aver_dur_dict[manuf] = [aver_dur_dict[manuf][i] + aver_dur_dict[manuf][i+1] for i in range(len(aver_dur_dict[manuf])-1)][0]/(len(aver_dur_dict[manuf]))
+        else:
+            aver_dur_dict[manuf] = aver_dur_dict[manuf][0]
+    return aver_dur_dict
