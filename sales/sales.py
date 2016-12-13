@@ -53,6 +53,13 @@ def start_module():
         elif option == "5":
             get_lowest_price_item_id(table)
         elif option == "6":
+            inputs = get_dates()
+            year_from = inputs[0]
+            month_from = inputs[1]
+            day_from = inputs[2]
+            year_to = inputs[3]
+            month_to = inputs[4]
+            day_to = inputs[5]
             get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
         elif option == "0":
             break
@@ -190,10 +197,34 @@ def get_lowest_price_item_id(table):
             return table[index][0]
 
 
+def get_dates():
+    user_input = ["Year from", "Month from", "Day from", "Year to", "Month to", "Day to"]
+    title = "Please input required data"
+    is_correct_input = False
+    while not is_correct_input:
+        inputs = ui.get_inputs(user_input, title)
+        try:
+            test = int(inputs[0]) + int(inputs[1]) + int(inputs[2]) + int(inputs[3]), + int(inputs[4]) + int(inputs[5])
+        except ValueError:
+            ui.print_error_message("Incorect input. Please try again.")
+            continue
+        if int(inputs[0]) > 2100 or int(inputs[3]) > 2100 or int(inputs[2]) > 31 or int(inputs[5]) > 31 or int(inputs[1]) > 12 or int(inputs[4]) > 12:
+            ui.print_error_message("Incorect date. Please try again.")
+            continue
+        is_correct_input = True
+    return inputs
+
 # the question: Which items are sold between two given dates ? (from_date < sale_date < to_date)
 # return type: list of lists (the filtered table)
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
-
-    # your code
-
-    pass
+    table_copy = []
+    sum_of_input_from = int(year_from)*365 + int(month_from)*12 + int(day_from)
+    sum_of_input_to = int(year_to)*365 + int(month_to)*12 + int(day_to)
+    for row in table:
+        sum_of_table = int(row[5])*365 + int(row[3])*12 + int(row[4])
+        if sum_of_table > sum_of_input_from:
+            if sum_of_table < sum_of_input_to:
+                table_copy.append(row)
+    title_list = ["Id", "Title", "Price", "Month", "Day", "Year"]
+    ui.print_table(table_copy, title_list)
+    return table_copy
