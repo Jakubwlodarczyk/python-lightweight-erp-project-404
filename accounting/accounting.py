@@ -18,6 +18,31 @@ import data_manager
 import common
 
 
+def choose(table):
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "1":
+        show_table(table)
+    elif option == "2":
+        add(table)
+    elif option == "3":
+        try:
+            id_to_remove = ui.get_inputs(['Enter id to remove: '], '')
+            table = remove(table, id_to_remove)
+        except ValueError as msg:
+            ui.print_error_message(msg)
+    elif option == "4":
+        update(table)
+    elif option == "5":
+        which_year_max(table)
+    elif option == "6":
+        avg_amount(table)
+    elif option == "0":
+        return False
+    else:
+        raise KeyError("There is no such option.")
+
+
 def start_module():
     """
     Starts this module and displays its menu.
@@ -29,7 +54,23 @@ def start_module():
     """
 
     # you code
+    table = data_manager.get_table_from_file('accounting/items_test.csv')
+    options = ['Show table',
+               'Add',
+               'Remove',
+               'Update',
+               'Which year max',
+               'Avg amount']
 
+    menu = None
+    while menu == None:
+        ui.print_menu('Accounting menu', options, 'Back to main')
+        try:
+            menu = choose(table)
+        except KeyError as err:
+            ui.print_error_message(err)
+    print(table)
+    data_manager.write_table_to_file('accounting/items_test.csv', table)
     pass
 
 
@@ -45,7 +86,8 @@ def show_table(table):
     """
 
     # your code
-
+    title_list = ['id', 'month', 'day', 'year', 'type', 'amount']
+    ui.print_table(table, title_list)
     pass
 
 
@@ -61,6 +103,12 @@ def add(table):
     """
 
     # your code
+    list_labels = ['Month',
+                   'Day',
+                   'Year',
+                   'Type',
+                   'Amount']
+    new_row = ui.get_inputs(list_labels, 'What you wanna to add?')
 
     return table
 
@@ -76,8 +124,13 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
-
-    # your code
+    count = 0
+    for i in range(len(table)):
+        if str(id_[0]) == str(table[i][0]):
+            table.remove(table[i])
+            count = 1
+    if count == 0:
+        raise ValueError('No record of that id')
 
     return table
 
