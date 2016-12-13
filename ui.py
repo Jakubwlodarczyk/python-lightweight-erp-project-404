@@ -28,7 +28,7 @@ def print_table(table, title_list):
     table = [to_format.format(*row) for row in s]
     sum_of_col = sum(columns_max_lenght)
     for item in table:
-        print("-"*(sum_of_col+len(columns_max_lenght)*2))
+        print("-" * (sum_of_col + len(columns_max_lenght) * 2))
         print(item)
 
 
@@ -77,7 +77,6 @@ def print_menu(title, list_options, exit_message):
     Returns:
         This function doesn't return anything it only prints to console.
     """
-    os.system('clear')
     print(title + ':')
     for i in range(len(list_options) - 1):
         print('  ({}) {}'.format(i + 1, list_options[i]))
