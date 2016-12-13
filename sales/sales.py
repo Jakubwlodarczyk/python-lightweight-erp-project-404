@@ -181,10 +181,13 @@ def update(table, id_):
 # return type: string (id)
 # if there are more than one with the lowest price, return the first by descending alphabetical order
 def get_lowest_price_item_id(table):
-
-    # your code
-
-    pass
+    price_table = []
+    for row in table:
+        price_table.append(row[2])
+    min_price = min(price_table)
+    for index, row in enumerate(table):
+        if row[2] == min_price:
+            return table[index][0]
 
 
 # the question: Which items are sold between two given dates ? (from_date < sale_date < to_date)
