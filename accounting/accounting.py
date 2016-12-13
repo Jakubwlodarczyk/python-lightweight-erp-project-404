@@ -22,7 +22,7 @@ def choose(table):
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
-        show_table(table)
+        show_table(table[:])
     elif option == "2":
         add(table)
     elif option == "3":
@@ -38,7 +38,8 @@ def choose(table):
         except ValueError as msg:
             ui.print_error_message(msg)
     elif option == "5":
-        which_year_max(table)
+        year = which_year_max(table)
+        ui.print_result(year, 'Best profit year')
     elif option == "6":
         avg_amount(table)
     elif option == "0":
@@ -156,8 +157,8 @@ def update(table, id_):
     # your code
     i = 0
     update_id = 0
-    while i < len(table):
-        if str(id_[0]) == str(table[i][0]):
+    # while i < len(table):
+    #    if str(id_[0]) == str(table[i][0]):
 
     return table
 
@@ -168,10 +169,25 @@ def update(table, id_):
 # the question: Which year has the highest profit? (profit=in-out)
 # return the answer (number)
 def which_year_max(table):
-
-    # your code
-
-    pass
+    profit_dict = {}
+    profit = 0
+    year = 0
+    for item in table:
+        if item[3] not in profit_dict:
+            if item[4] == 'in':
+                profit_dict[item[3]] = int(item[5])
+            else:
+                profit_dict[item[3]] = -int(item[5])
+        else:
+            if item[4] == 'in':
+                profit_dict[item[3]] += int(item[5])
+            else:
+                profit_dict[item[3]] -= int(item[5])
+    for k, v in profit_dict.items():
+        if v > profit:
+            profit = v
+            year = k
+    return(str(year))
 
 
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
