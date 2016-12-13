@@ -1,5 +1,3 @@
-
-
 def print_table(table, title_list):
     """
     Prints table with data. Sample output:
@@ -19,9 +17,19 @@ def print_table(table, title_list):
         This function doesn't return anything it only prints to console.
     """
 
-    # your goes code
-
-    pass
+    table.insert(0, title_list)
+    columns_max_lenght = [0 for x in range(len(table[0]))]
+    for row_index, row in enumerate(table):
+        for col_index, col in enumerate(row):
+            if columns_max_lenght[col_index] < len(col):
+                columns_max_lenght[col_index] = len(col)
+    s = [[str(e) for e in row] for row in table]
+    to_format = '  '.join('{{:{}}}'.format(x) for x in columns_max_lenght)
+    table = [to_format.format(*row) for row in s]
+    sum_of_col = sum(columns_max_lenght)
+    for item in table:
+        print("-"*(sum_of_col+len(columns_max_lenght)*2))
+        print(item)
 
 
 def print_result(result, label):
@@ -36,9 +44,16 @@ def print_result(result, label):
         This function doesn't return anything it only prints to console.
     """
 
-    # your code
-
-    pass
+    if type(result) == string:
+        print("{}: {}".format(label, result))
+    if type(result) == list:
+        print(label + ":")
+        for res in result:
+            print(str(res) + "\n")
+    if type(result) == dict:
+        print(label + ":")
+        for item, value in result:
+            print("{}: {}".format(item, value))
 
 
 def print_menu(title, list_options, exit_message):
