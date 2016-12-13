@@ -129,8 +129,15 @@ def update(table, id_):
 # return type: a dictionary with this structure: { [manufacturer] : [count] }
 def get_counts_by_manufacturers(table):
 
-    # your code
+    manufacture_dict = {}
+    for i in table:
+        if i[2] not in manufacture_dict:
+            manufacture_dict[i[2]] = 1
+        elif i[2] in manufacture_dict:
+            manufacture_dict[i[2]] += 1
 
+    ui.print_result(manufacture_dict, 'Games by manufacture')
+    return manufacture_dict
     pass
 
 

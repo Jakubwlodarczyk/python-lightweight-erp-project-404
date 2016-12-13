@@ -45,7 +45,7 @@ def print_result(result, label):
         This function doesn't return anything it only prints to console.
     """
 
-    if type(result) == string:
+    if type(result) == str:
         print("{}: {}".format(label, result))
     if type(result) == list:
         print(label + ":")
@@ -53,9 +53,9 @@ def print_result(result, label):
 
             print(str(res) + "\n")
     if type(result) == dict:
-        print(label + ":")
-        for item, value in result:
-            print("{}: {}".format(item, value))
+        print('{} {}'.format(label, 'Sum:'))
+        for item in result:
+            print('{} {}'.format(item, result[item]))
 
 
 def print_menu(title, list_options, exit_message):
@@ -79,7 +79,7 @@ def print_menu(title, list_options, exit_message):
         This function doesn't return anything it only prints to console.
     """
     print(title + ':')
-    for i in range(len(list_options) - 1):
+    for i in range(len(list_options)):
         print('  ({}) {}'.format(i + 1, list_options[i]))
     print('  (0) ' + exit_message)
 
