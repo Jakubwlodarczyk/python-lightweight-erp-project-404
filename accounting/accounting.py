@@ -28,11 +28,15 @@ def choose(table):
     elif option == "3":
         try:
             id_to_remove = ui.get_inputs(['Enter id to remove: '], '')
-            table = remove(table, id_to_remove)
+            remove(table, id_to_remove)
         except ValueError as msg:
             ui.print_error_message(msg)
     elif option == "4":
-        update(table)
+        try:
+            id_to_update = ui.get_inputs(['Enter id to update'], '')
+            update(table)
+        except ValueError as msg:
+            ui.print_error_message(msg)
     elif option == "5":
         which_year_max(table)
     elif option == "6":
@@ -109,7 +113,9 @@ def add(table):
                    'Type',
                    'Amount']
     new_row = ui.get_inputs(list_labels, 'What you wanna to add?')
-
+    new_id = common.generate_random(table)
+    new_row.insert(0, new_id)
+    table.append(new_row)
     return table
 
 
@@ -148,6 +154,10 @@ def update(table, id_):
     """
 
     # your code
+    i = 0
+    update_id = 0
+    while i < len(table):
+        if str(id_[0]) == str(table[i][0]):
 
     return table
 
