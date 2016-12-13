@@ -63,10 +63,9 @@ def print_menu(title, list_options, exit_message):
     """
 
     print(title + ':')
-    for i in range(len(list_options)-1):
-        print('\t ({}) {}'.format(i+1, list_options[i])
-    print('\t (0) '+ exit_message)    
-
+    for i in range(len(list_options) - 1):
+        print('  ({}) {}'.format(i + 1, list_options[i]))
+    print(exit_message)
     pass
 
 

@@ -29,7 +29,13 @@ def start_module():
     """
 
     # you code
-
+    options = ['Show table',
+               'Add',
+               'Remove',
+               'Update',
+               'Which year max',
+               'Avg avg_amount']
+    ui.print_menu('Accounting menu', options, 'Back to main')
     pass
 
 
