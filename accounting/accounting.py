@@ -18,6 +18,27 @@ import data_manager
 import common
 
 
+def choose(table):
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "1":
+        show_table(table)
+    elif option == "2":
+        add(table)
+    elif option == "3":
+        remove(table)
+    elif option == "4":
+        update(table)
+    elif option == "5":
+        which_year_max(table)
+    elif option == "6":
+        avg_amount(table)
+    elif option == "0":
+        pass
+    else:
+        raise KeyError("There is no such option.")
+
+
 def start_module():
     """
     Starts this module and displays its menu.
@@ -29,7 +50,18 @@ def start_module():
     """
 
     # you code
-
+    table = data_manager.get_table_from_file('accounting/items_test.csv')
+    options = ['Show table',
+               'Add',
+               'Remove',
+               'Update',
+               'Which year max',
+               'Avg amount']
+    ui.print_menu('Accounting menu', options, 'Back to main')
+    try:
+        choose(table)
+    except KeyError as err:
+        ui.print_error_message(err)
     pass
 
 
