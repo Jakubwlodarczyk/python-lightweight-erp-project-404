@@ -44,9 +44,16 @@ def print_result(result, label):
         This function doesn't return anything it only prints to console.
     """
 
-    # your code
-
-    pass
+    if type(result) == string:
+        print("{}: {}".format(label, result))
+    if type(result) == list:
+        print(label + ":")
+        for res in result:
+            print(str(res) + "\n")
+    if type(result) == dict:
+        print(label + ":")
+        for item, value in result:
+            print("{}: {}".format(item, value))
 
 
 def print_menu(title, list_options, exit_message):
@@ -70,7 +77,10 @@ def print_menu(title, list_options, exit_message):
         This function doesn't return anything it only prints to console.
     """
 
-    # your code
+    print(title + ':')
+    for i in range(len(list_options)-1):
+        print('  ({}) {}'.format(i+1, list_options[i]))
+    print('  (0) '+ exit_message)
 
     pass
 
@@ -97,6 +107,10 @@ def get_inputs(list_labels, title):
     inputs = []
 
     # your code
+    print(title)
+    for item in list_labels:
+        user_input = input(item + ' ')
+        inputs.append(user_input)
 
     return inputs
 
@@ -114,7 +128,4 @@ def print_error_message(message):
     Returns:
         This function doesn't return anything it only prints to console.
     """
-
-    # your code
-
-    pass
+    print("Error: ", message)
