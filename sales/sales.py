@@ -45,9 +45,10 @@ def start_module():
         elif option == "2":
             add(table)
         elif option == "3":
-            id_ = id_to_remove(table)
+            id_ = get_id(table)
             remove(table, id_)
         elif option == "4":
+            id_ = get_id(table)
             update(table, id_)
         elif option == "5":
             get_lowest_price_item_id(table)
@@ -102,12 +103,12 @@ def add(table):
     return table
 
 
-def id_to_remove(table):
+def get_id(table):
     id_table = []
     for row in table:
         id_table.append(row[0])
     user_input = ["Id"]
-    title = "Please input ID for row to remove"
+    title = "Please input ID"
     is_correct_input = False
     while not is_correct_input:
         inputs = ui.get_inputs(user_input, title)
@@ -118,7 +119,7 @@ def id_to_remove(table):
     return inputs[0]
 
 
-def find_index_to_remove(table, id_):
+def find_index(table, id_):
     for index, row in enumerate(table):
         if row[0] == id_:
             return index
@@ -136,7 +137,7 @@ def remove(table, id_):
         Table without specified record.
     """
 
-    index = find_index_to_remove(table, id_)
+    index = find_index(table, id_)
     del table[index]
     return table
 
@@ -152,9 +153,24 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-
-    # your code
-
+    index = find_index(table, id_)
+    user_input = ["Title", "Price", "Month", "Day", "Year"]
+    title = "Please input required data"
+    is_correct_input = False
+    while not is_correct_input:
+        inputs = ui.get_inputs(user_input, title)
+        try:
+            test = int(inputs[1]) + int(inputs[2]) + int(inputs[3]) + int(inputs[4])
+        except ValueError:
+            ui.print_error_message("Incorect input. Please try again.")
+            continue
+        if int(inputs[2]) > 12 or int(inputs[3]) > 31 or int(inputs[4]) > 2100:
+            ui.print_error_message("Incorect date. Please try again.")
+            continue
+        is_correct_input = True
+    inputs.insert(0, id_)
+    del table[index]
+    table.insert(index, inputs)
     return table
 
 
