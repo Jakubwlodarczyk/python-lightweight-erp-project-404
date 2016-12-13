@@ -16,21 +16,20 @@ def print_table(table, title_list):
     Returns:
         This function doesn't return anything it only prints to console.
     """
-
-    table.insert(0, title_list)
-    columns_max_lenght = [0 for x in range(len(table[0]))]
-    for row_index, row in enumerate(table):
+    work_table = table[:]
+    work_table.insert(0, title_list)
+    columns_max_lenght = [0 for x in range(len(work_table[0]))]
+    for row_index, row in enumerate(work_table):
         for col_index, col in enumerate(row):
             if columns_max_lenght[col_index] < len(col):
                 columns_max_lenght[col_index] = len(col)
-    s = [[str(e) for e in row] for row in table]
+    s = [[str(e) for e in row] for row in work_table]
     to_format = '  '.join('{{:{}}}'.format(x) for x in columns_max_lenght)
     table = [to_format.format(*row) for row in s]
     sum_of_col = sum(columns_max_lenght)
     for item in table:
         print("-" * (sum_of_col + len(columns_max_lenght) * 2))
         print(item)
-    table.pop(0)
 
 
 def print_result(result, label):
