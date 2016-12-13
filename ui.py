@@ -49,6 +49,7 @@ def print_result(result, label):
     if type(result) == list:
         print(label + ":")
         for res in result:
+
             print(str(res) + "\n")
     if type(result) == dict:
         print(label + ":")
@@ -76,11 +77,10 @@ def print_menu(title, list_options, exit_message):
     Returns:
         This function doesn't return anything it only prints to console.
     """
-
     print(title + ':')
-    for i in range(len(list_options)-1):
-        print('  ({}) {}'.format(i+1, list_options[i]))
-    print('  (0) '+ exit_message)
+    for i in range(len(list_options) - 1):
+        print('  ({}) {}'.format(i + 1, list_options[i]))
+    print('  (0) ' + exit_message)
 
     pass
 
