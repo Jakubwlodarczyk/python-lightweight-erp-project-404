@@ -77,7 +77,6 @@ def print_menu(title, list_options, exit_message):
     Returns:
         This function doesn't return anything it only prints to console.
     """
-    os.system('clear')
     print(title + ':')
     for i in range(len(list_options) - 1):
         print('  ({}) {}'.format(i + 1, list_options[i]))
