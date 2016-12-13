@@ -34,14 +34,19 @@ def choose(table):
     elif option == "4":
         try:
             id_to_update = ui.get_inputs(['Enter id to update'], '')
-            update(table)
+            update(table, id_to_update)
         except ValueError as msg:
             ui.print_error_message(msg)
     elif option == "5":
         year = which_year_max(table)
         ui.print_result(year, 'Best profit year')
     elif option == "6":
-        avg_amount(table)
+        try:
+            year = ui.get_inputs(['which year?'], '')
+            answear = avg_amount(table, year[0])
+        except ValueError as msg:
+            ui.print_error_message(msg)
+        ui.print_result(answear, 'Averge profit')
     elif option == "0":
         return False
     else:
@@ -74,7 +79,6 @@ def start_module():
             menu = choose(table)
         except KeyError as err:
             ui.print_error_message(err)
-    print(table)
     data_manager.write_table_to_file('accounting/items_test.csv', table)
     pass
 
@@ -93,7 +97,6 @@ def show_table(table):
     # your code
     title_list = ['id', 'month', 'day', 'year', 'type', 'amount']
     ui.print_table(table, title_list)
-    pass
 
 
 def add(table):
@@ -153,13 +156,19 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-
+    list_labels = ['Month',
+                   'Day',
+                   'Year',
+                   'Type',
+                   'Amount']
     # your code
     i = 0
-    update_id = 0
-    # while i < len(table):
-    #    if str(id_[0]) == str(table[i][0]):
-
+    new_row = ui.get_inputs(list_labels, 'New Value:')
+    while i < len(table):
+        if str(id_[0]) == str(table[i][0]):
+            new_row.insert(0, table[i][0])
+            table[i] = new_row
+    print(table)
     return table
 
 
@@ -193,7 +202,17 @@ def which_year_max(table):
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
 # return the answer (number)
 def avg_amount(table, year):
-
+    items = 0
+    profit = 0
     # your code
+    for item in table:
+        if item[3] == year:
+            items += 1
+            if item[4] == 'in':
+                profit += int(item[5])
+            else:
+                profit -= int(item[5])
 
+    avg = profit / items
+    return str(avg)
     pass
