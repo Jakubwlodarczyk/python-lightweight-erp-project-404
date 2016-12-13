@@ -45,6 +45,7 @@ def start_module():
         elif option == "2":
             add(table)
         elif option == "3":
+            id_ = id_to_remove(table)
             remove(table, id_)
         elif option == "4":
             update(table, id_)
@@ -101,6 +102,28 @@ def add(table):
     return table
 
 
+def id_to_remove(table):
+    id_table = []
+    for row in table:
+        id_table.append(row[0])
+    user_input = ["Id"]
+    title = "Please input ID for row to remove"
+    is_correct_input = False
+    while not is_correct_input:
+        inputs = ui.get_inputs(user_input, title)
+        if not inputs[0] in id_table:
+            ui.print_error_message("Incorect input. Please try again.")
+            continue
+        is_correct_input = True
+    return inputs[0]
+
+
+def find_index_to_remove(table, id_):
+    for index, row in enumerate(table):
+        if row[0] == id_:
+            return index
+
+
 def remove(table, id_):
     """
     Remove a record with a given id from the table.
@@ -113,8 +136,8 @@ def remove(table, id_):
         Table without specified record.
     """
 
-    # your code
-
+    index = find_index_to_remove(table, id_)
+    del table[index]
     return table
 
 
