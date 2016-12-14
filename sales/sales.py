@@ -126,7 +126,7 @@ def get_id(table):
     return inputs[0]
 
 
-def find_index(table, id_):
+def find_index_table(table, id_): #
     for index, row in enumerate(table):
         if row[0] == id_:
             return index
@@ -144,7 +144,7 @@ def remove(table, id_):
         Table without specified record.
     """
 
-    index = find_index(table, id_)
+    index = find_index_table(table, id_)
     del table[index]
     return table
 
@@ -160,7 +160,7 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-    index = find_index(table, id_)
+    index = find_index_table(table, id_)
     user_input = ["Title", "Price", "Month", "Day", "Year"]
     title = "Please input required data"
     is_correct_input = False
@@ -217,14 +217,16 @@ def get_dates():
 # the question: Which items are sold between two given dates ? (from_date < sale_date < to_date)
 # return type: list of lists (the filtered table)
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
-    table_copy = []
+    table_output = []
     sum_of_input_from = int(year_from)*365 + int(month_from)*12 + int(day_from)
     sum_of_input_to = int(year_to)*365 + int(month_to)*12 + int(day_to)
     for row in table:
         sum_of_table = int(row[5])*365 + int(row[3])*12 + int(row[4])
         if sum_of_table > sum_of_input_from:
             if sum_of_table < sum_of_input_to:
-                table_copy.append(row)
+                table_output.append(row)
     title_list = ["Id", "Title", "Price", "Month", "Day", "Year"]
-    ui.print_table(table_copy, title_list)
-    return table_copy
+    ui.print_table(table_output, title_list)
+    for row in table_output:
+        row[2], row[5], row[3], row[4] = int(row[2]), int(row[5]), int(row[3]), int(row[4])
+    return table_output
