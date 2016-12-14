@@ -44,12 +44,12 @@ def start_module():
             table = add(table)
         elif option == "3":
             id_ = ui.get_inputs(["ID: "], "Please provide ID of record to remove")
-            if common.is_this_record_exist(table, id_[0]):
-                table = remove(table, id_[0])
+            if common.is_this_record_exist(table, id_):
+                table = remove(table, id_)
         elif option == "4":
             id_ = ui.get_inputs(["ID: "], "Please provide ID of record to update")
-            if common.is_this_record_exist(table, id_[0]):
-                table = update(table, id_[0])
+            if common.is_this_record_exist(table, id_):
+                table = update(table, id_)
         elif option == "5":
             ui.print_result(get_oldest_person(table), "Oldest persons")
         elif option == "6":
@@ -84,9 +84,7 @@ def add(table):
     Returns:
         Table with a new record
     """
-    inputs = ui.get_inputs(["Name and surname: ", "Birth date: "], "Please provide person data")
-    new_key = common.generate_random(table)
-    table.append([new_key, inputs[0], inputs[1]])
+    table = common.add_to_table(table, ["Name and surname: ", "Birth date: "])
     return table
 
 
@@ -101,12 +99,8 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
-    i = 0
-    while i < len(table):
-        if id_ == table[i][0]:
-            del table[i]
-            return table
-        i += 1
+    table = common.remove_record_from_table(table, id_)
+    return table
 
 
 def update(table, id_):
@@ -120,20 +114,16 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-    inputs = ui.get_inputs(["Name and surname: ", "Birth date: "], "Please provide person data to update")
-    i = 0
-    while i < len(table):
-        if id_ == table[i][0]:
-            table[i][1], table[i][2] = inputs[0], inputs[1]
-            return table
-        i += 1
-
+    table = common.update_table(table, id_, ["Name and surname: ", "Birth date: "])
+    return table
 
 # special functions:
 # ------------------
 
 # the question: Who is the oldest person ?
 # return type: list of strings (name or names if there are two more with the same value)
+
+
 def get_oldest_person(table):
     """ Searching for oldest persons in table, return string of names """
     oldest_year = min([int(year[2]) for year in table])  # search for oldest year
@@ -151,10 +141,7 @@ def get_oldest_person(table):
 
 def get_persons_closest_to_average(table):
     """ Searching for closest persons to average year in table, return string of names """
-    average = 0
-    for year in table:
-        average += int(year[2])  # sum of years
-    average = round(average/len(table))  # average year
+    average = common.mean_from_list([int(data[2]) for data in table])
 
     list_of_abs = [abs(int(person[2])-average) for person in table]  # make list of substract years with same index
     min_from_abs = min(list_of_abs)
