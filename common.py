@@ -77,6 +77,18 @@ def is_this_record_exist(table, id_):
 
 
 def remove_record_from_table(table, id_):
+    """
+    Remove record from your table by ID.
+    Important! Before you use this function check
+    if given ID exist in your table by using is_this_record_exist function.
+
+    Args:
+        table: your table
+        id_: user input id to remove
+
+    Returns:
+        Table with removed record
+    """
     i = 0
     while i < len(table):
         if id_ == table[i][0]:
