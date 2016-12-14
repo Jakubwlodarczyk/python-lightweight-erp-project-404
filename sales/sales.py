@@ -28,7 +28,7 @@ def start_module():
         None
     """
 
-    table = data_manager.get_table_from_file('sales/sales_test.csv')
+    table = data_manager.get_table_from_file('sales/sales.csv')
     options = ["Show Sales",
                "Add item",
                "Remove item",
@@ -62,6 +62,7 @@ def start_module():
             day_to = inputs[5]
             get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
         elif option == "0":
+            data_manager.write_table_to_file('sales/sales.csv', table)
             break
         else:
             raise KeyError("There is no such option.")
