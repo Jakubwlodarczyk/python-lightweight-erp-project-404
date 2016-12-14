@@ -124,15 +124,12 @@ def update(table, id_):
 
 def special_function(table, function_num):
 
-    #function_dict = {"1": get_available_items(table), "2": get_average_durability_by_manufacturers(table)}
-    #print(function_num, function_dict[function_num])
     function_dict = common.modules_special_functions("inventory")
-    function_label = {"1": "Items that have not exceeded their durability yet:", "2": "Average durability times for each manufacturer:"}
-    #function_label = common.special_function_label("inventory")
+    function_label = common.modules_special_function_label("inventory")
     special_function_result = eval(function_dict[function_num])
-    print(special_function_result)
     ui.print_result(special_function_result, function_label[function_num])
-    print("special functions here")
+
+
 # special functions:
 # ------------------
 
