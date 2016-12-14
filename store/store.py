@@ -35,6 +35,11 @@ def start_module():
         'Get count by manufactures',
         'Get average by manufacturer']
 
+    manufacturer = []
+    for i in table:
+        if i[2] not in manufacturer:
+            manufacturer.append(i[2])
+
     while True:
         ui.print_menu('Store menu', options, 'Back to main menu')
 
@@ -177,5 +182,17 @@ def get_counts_by_manufacturers(table):
 # the question: What is the average amount of games in stock of a given manufacturer?
 # return type: number
 def get_average_by_manufacturer(table, manufacturer):
+
+    inputs = ui.get_inputs(['Enter the manufacture'], '')
+    choosen_manufacture = inputs[0]
+    if choosen_manufacture not in manufacturer:
+        ui.print_error_message('Manufacture is not in list')
+    else:
+        list_of_stock_items = [int(record[4]) for record in table if record[2] == choosen_manufacture]
+        sum_items = 0
+        for i in list_of_stock_items:
+            sum_items += i
+        average = sum_items / len(list_of_stock_items)
+        return average
 
     pass
