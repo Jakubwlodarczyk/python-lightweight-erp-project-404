@@ -127,13 +127,13 @@ def add_to_table(table, title_list):
 
 def update_table(table, id_, title_list):
     for record in table:
-    if record[0] == id_[0]:
-        new_row = ui.get_inputs(title_list, 'New Value:')
-        count = 1
-        for data in new_row:
-            if data != '':
-                record[count] = data
-            count += 1
+        if record[0] == id_[0]:
+            new_row = ui.get_inputs(title_list, 'New Value:')
+            count = 1
+            for data in new_row:
+                if data != '':
+                    record[count] = data
+                count += 1
     return table
 
 
@@ -213,4 +213,3 @@ def start_module(module_name,module_data_file):
                 return None
             else:
                 ui.print_error_message("Choose correct number")
-
