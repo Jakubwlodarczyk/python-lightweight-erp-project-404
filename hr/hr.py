@@ -122,6 +122,8 @@ def update(table, id_):
 
 # the question: Who is the oldest person ?
 # return type: list of strings (name or names if there are two more with the same value)
+
+
 def get_oldest_person(table):
     """ Searching for oldest persons in table, return string of names """
     oldest_year = min([int(year[2]) for year in table])  # search for oldest year
@@ -139,10 +141,7 @@ def get_oldest_person(table):
 
 def get_persons_closest_to_average(table):
     """ Searching for closest persons to average year in table, return string of names """
-    average = 0
-    for year in table:
-        average += int(year[2])  # sum of years
-    average = round(average/len(table))  # average year
+    average = common.mean_from_list([int(data[2]) for data in table])
 
     list_of_abs = [abs(int(person[2])-average) for person in table]  # make list of substract years with same index
     min_from_abs = min(list_of_abs)
