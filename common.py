@@ -67,10 +67,10 @@ def is_this_record_exist(table, id_):
         False if record not exitst and print error message
 
     Example usage:
-        if common.is_this_record_exist(table, id_[0]):
-            table = update(table, id_[0])
+        if common.is_this_record_exist(table, id_):
+            table = update(table, id_)
     """
-    if id_ not in [record[0] for record in table]:
+    if id_[0] not in [record[0] for record in table]:
         ui.print_error_message("Record with this ID not found")
         return False
     return True
@@ -91,7 +91,7 @@ def remove_record_from_table(table, id_):
     """
     i = 0
     while i < len(table):
-        if id_ == table[i][0]:
+        if id_[0] == table[i][0]:
             del table[i]
             return table
         i += 1
@@ -111,9 +111,7 @@ def update_table(table, id_, title_list):
             new_row = ui.get_inputs(title_list, 'New Value:')
             count = 1
             for data in new_row:
-                if data == '':
-                    count += 1
-                else:
+                if data != '':
                     record[count] = data
-                    count += 1
+                count += 1
     return table
