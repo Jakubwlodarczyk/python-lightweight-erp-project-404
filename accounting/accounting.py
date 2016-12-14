@@ -116,10 +116,7 @@ def add(table):
                    'Year',
                    'Type',
                    'Amount']
-    new_row = ui.get_inputs(list_labels, 'What you wanna to add?')
-    new_id = common.generate_random(table)
-    new_row.insert(0, new_id)
-    table.append(new_row)
+    table = common.add_to_table(table, list_labels)
     return table
 
 
