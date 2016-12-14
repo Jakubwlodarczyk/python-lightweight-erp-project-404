@@ -49,7 +49,7 @@ def print_result(result, label):
         This function doesn't return anything it only prints to console.
     """
 
-    if type(result) == str:
+    if type(result) in [str, int]: #result can be int too (needed to pass test), so this part works for 1-word result not depend on type
         print("{}: {}".format(label, result))
     if type(result) == list:
         print(label + ":")

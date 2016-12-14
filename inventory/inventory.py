@@ -18,6 +18,7 @@ import common
 
 
 def start_module():
+
     """
     Starts this module and displays its menu.
     User can access default special features from here.
@@ -26,10 +27,13 @@ def start_module():
     Returns:
         None
     """
+    module_name = "inventory"
+    module_data_file = 'inventory/inventory.csv'
+    
+    common.start_module(module_name,module_data_file)
 
 
 
-    pass
 
 
 def show_table(table):
@@ -42,10 +46,8 @@ def show_table(table):
     Returns:
         None
     """
-
-    # your code
-
-    pass
+    title_list = common.modules_table_first_row("inventory")
+    ui.print_table(table, title_list)
 
 
 def add(table):
@@ -58,9 +60,8 @@ def add(table):
     Returns:
         Table with a new record
     """
-
-    # your code
-
+    title_list = common.modules_table_first_row("inventory")
+    table = common.add_to_table(table, title_list[1:])
     return table
 
 
@@ -76,8 +77,7 @@ def remove(table, id_):
         Table without specified record.
     """
 
-    # your code
-
+    common.remove_record_from_table(table, id_)
     return table
 
 
@@ -92,10 +92,15 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-
-    # your code
-
+    title_list = common.modules_table_first_row("inventory")
+    common.update_table(table, id_, title_list)
     return table
+
+def special_function(table, function_num):
+
+    function_dict = common.modules_special_functions("inventory")
+    function_label = common.modules_special_functions_labels("inventory")
+
 
 
 # special functions:
@@ -107,6 +112,7 @@ def update(table, id_):
 # @table: list of lists
 def get_available_items(table):
     import datetime
+    #table = list(map(lambda x: int(x[-1]) and int(x[-2]), table))
     return list(filter(lambda x: int(x[-1])+int(x[-2]) >= datetime.date.today().year, table))
 
 
