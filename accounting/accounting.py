@@ -159,18 +159,8 @@ def update(table, id_):
                    'Type',
                    'Amount']
     # your code
-    i = 0
-    count = 0
-    while i < len(table):
-        if str(id_[0]) == str(table[i][0]):
-            new_row = ui.get_inputs(list_labels, 'New Value:')
-            new_row.insert(0, table[i][0])
-            for item in range(len(table[i]) - 1):
-                if list_labels[count] != '':
-                    table[i][count] = new_row[count]
-                count += 1
-        i += 1
-    print(table)
+    common.update_table(table, id_, list_labels)
+
     return table
 
 
