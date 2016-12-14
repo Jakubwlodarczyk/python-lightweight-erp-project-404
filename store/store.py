@@ -86,6 +86,14 @@ def add(table):
     Returns:
         Table with a new record
     """
+    list_labels = ['Title',
+                   'Manufacturer',
+                   'Price',
+                   'In_stock']
+    new_row = ui.get_inputs(list_labels, 'What you wanna to add?')
+    new_id = common.generate_random(table)
+    new_row.insert(0, new_id)
+    table.append(new_row)
 
     return table
 
@@ -101,6 +109,13 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
+    count = 0
+    for i in range(len(table)):
+        if str(id_[0]) == str(table[i][0]):
+            table.remove(table[i])
+            count = 1
+    if count == 0:
+        raise ValueError('No record of that id')
 
     return table
 
@@ -117,7 +132,24 @@ def update(table, id_):
         table with updated record
     """
 
-    # your code
+    list_labels = ['Title',
+                   'Manufacturer',
+                   'Price',
+                   'In_stock']
+
+    i = 0
+    count = 0
+    while i < len(table):
+        if str(id_[0]) == str(table[i][0]):
+            new_row = ui.get_inputs(list_labels, 'New Value:')
+            new_row.insert(0, table[i][0])
+            for item in range(len(table[i]) - 1):
+                if list_labels[count] != '':
+                    table[i][count] = new_row[count]
+                count += 1
+        i += 1
+    print(table)
+    return table
 
     return table
 
@@ -130,6 +162,7 @@ def update(table, id_):
 def get_counts_by_manufacturers(table):
 
     manufacture_dict = {}
+
     for i in table:
         if i[2] not in manufacture_dict:
             manufacture_dict[i[2]] = 1
@@ -144,7 +177,5 @@ def get_counts_by_manufacturers(table):
 # the question: What is the average amount of games in stock of a given manufacturer?
 # return type: number
 def get_average_by_manufacturer(table, manufacturer):
-
-    # your code
 
     pass
