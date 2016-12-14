@@ -44,10 +44,12 @@ def start_module():
             table = add(table)
         elif option == "3":
             id_ = ui.get_inputs(["ID: "], "Please provide ID of record to remove")
-            table = remove(table, id_[0])
+            if common.is_this_record_exist(table, id_[0]):
+                table = remove(table, id_[0])
         elif option == "4":
             id_ = ui.get_inputs(["ID: "], "Please provide ID of record to update")
-            table = update(table, id_[0])
+            if common.is_this_record_exist(table, id_[0]):
+                table = update(table, id_[0])
         elif option == "5":
             ui.print_result(get_oldest_person(table), "Oldest persons")
         elif option == "6":
@@ -105,7 +107,6 @@ def remove(table, id_):
             del table[i]
             return table
         i += 1
-    ui.print_error_message("Record with this ID not found")
 
 
 def update(table, id_):
@@ -119,9 +120,6 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-    if id_ not in [record[0] for record in table]:
-        ui.print_error_message("Record with this ID not found")
-        return table
     inputs = ui.get_inputs(["Name and surname: ", "Birth date: "], "Please provide person data to update")
     i = 0
     while i < len(table):
@@ -129,7 +127,6 @@ def update(table, id_):
             table[i][1], table[i][2] = inputs[0], inputs[1]
             return table
         i += 1
-    #ui.print_error_message("Record with this ID not found")
 
 
 # special functions:
@@ -145,8 +142,8 @@ def get_oldest_person(table):
     while i < len(table):
         if int(table[i][2]) == oldest_year:
             oldest_person.append(table[i][1])
-            return oldest_person
         i += 1
+    return oldest_person
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
