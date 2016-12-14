@@ -27,6 +27,7 @@ def start_module():
     """
 
     table = data_manager.get_table_from_file('store/games_test.csv')
+
     options = [
         'Show Table',
         'Add to Table',
@@ -45,13 +46,23 @@ def start_module():
         elif option == "2":
             add(table)
         elif option == "3":
-            remove(table, id_)
+            id_to_remove = ui.get_inputs(['Enter id to remove: '], '')
+            if common.is_this_record_exist(table, id_to_remove):
+                remove(table, id_to_remove)
         elif option == "4":
-            update(table, id_)
+            try:
+                id_to_update = ui.get_inputs(['Enter id to update'], '')
+                update(table, id_to_update)
+            except ValueError as msg:
+                ui.print_error_message(msg)
         elif option == "5":
-            get_counts_by_manufacturers(table)
+            manufacture_dict = get_counts_by_manufacturers(table)
+            ui.print_result(manufacture_dict, 'Games by manufacture')
         elif option == "6":
-            get_average_by_manufacturer(table, manufacturer)
+            inputs = ui.get_inputs(['Enter the manufacture'], '')
+            manufacturer = inputs[0]
+            average = get_average_by_manufacturer(table, manufacturer)
+            ui.print_result(str(average), 'Average: ')
         elif option == "0":
             break
         else:
@@ -86,8 +97,15 @@ def add(table):
     Returns:
         Table with a new record
     """
+    title_list = ['Title',
+                  'Manufacturer',
+                  'Price',
+                  'In_stock']
+
+    common.add_to_table(table, title_list)
 
     return table
+    pass
 
 
 def remove(table, id_):
@@ -101,8 +119,10 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
+    table = common.remove_record_from_table(table, id_)
 
     return table
+    pass
 
 
 def update(table, id_):
@@ -117,9 +137,14 @@ def update(table, id_):
         table with updated record
     """
 
-    # your code
+    list_labels = ['Title',
+                   'Manufacturer',
+                   'Price',
+                   'In_stock']
 
+    common.update_table(table, id_, list_labels)
     return table
+    pass
 
 
 # special functions:
@@ -130,13 +155,13 @@ def update(table, id_):
 def get_counts_by_manufacturers(table):
 
     manufacture_dict = {}
+
     for i in table:
         if i[2] not in manufacture_dict:
             manufacture_dict[i[2]] = 1
         elif i[2] in manufacture_dict:
             manufacture_dict[i[2]] += 1
 
-    ui.print_result(manufacture_dict, 'Games by manufacture')
     return manufacture_dict
     pass
 
@@ -145,6 +170,18 @@ def get_counts_by_manufacturers(table):
 # return type: number
 def get_average_by_manufacturer(table, manufacturer):
 
-    # your code
+    manufacturer_list = []
+    for i in table:
+        if i[2] not in manufacturer_list:
+            manufacturer_list.append(i[2])
+    if manufacturer not in manufacturer_list:
+        ui.print_error_message('Manufacture is not in list')
+    else:
+        list_of_stock_items = [int(record[4]) for record in table if record[2] == manufacturer]
+        sum_items = 0
+        for i in list_of_stock_items:
+            sum_items += i
+        average = sum_items / len(list_of_stock_items)
+        return average
 
     pass

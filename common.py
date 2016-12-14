@@ -5,6 +5,10 @@ import ui
 import data_manager
 import crm.crm as crm
 import inventory.inventory as inventory
+
+
+
+
 # generate and return a unique and random string
 # other expectation:
 # - at least 2 special char()expect: ';'), 2 number, 2 lower and 2 upper case letter
@@ -36,23 +40,31 @@ def generate_random(table):
     while not is_unique:
         is_unique = True
         for i in range(2):
-            generated += str(special_chars[random.randint(0, len(special_chars)-1)])
-            generated += str(digits[random.randint(0, len(digits)-1)])
-            generated += str(alphabet[random.randint(0, len(alphabet)-1)])
-            generated += str(alphabet[random.randint(0, len(alphabet)-1)].upper())
+
+
+
+            generated += str(special_chars[random.randint(0, len(special_chars) - 1)])
+            generated += str(digits[random.randint(0, len(digits) - 1)])
+            generated += str(alphabet[random.randint(0, len(alphabet) - 1)])
+            generated += str(alphabet[random.randint(0, len(alphabet) - 1)].upper())
         if generated in id_table:
             is_unique = False
 
     return generated
 
 
+def sum_numbers(numbers_list):
+    output = 0
+    for number in numbers_list:
+        output += number
+    return output
+
+
 def mean_from_list(num_list):
     num_sum = 0
-    for num in num_list: #making sum of number in list
+    for num in num_list:  # making sum of number in list
         num_sum += int(num)
-    mean = num_sum / len(num_list) #dividing by
-    if mean.is_integer():
-        mean = int(mean)
+    mean = num_sum / len(num_list)  # dividing by
     return mean
 
 
@@ -69,10 +81,13 @@ def is_this_record_exist(table, id_):
         False if record not exitst and print error message
 
     Example usage:
-        if common.is_this_record_exist(table, id_[0]):
-            table = update(table, id_[0])
+
+
+        if common.is_this_record_exist(table, id_):
+            table = update(table, id_)
     """
-    if id_ not in [record[0] for record in table]:
+    if id_[0] not in [record[0] for record in table]:
+
         ui.print_error_message("Record with this ID not found")
         return False
     return True
@@ -93,7 +108,10 @@ def remove_record_from_table(table, id_):
     """
     i = 0
     while i < len(table):
-        if id_ == table[i][0]:
+
+
+        if id_[0] == table[i][0]:
+
             del table[i]
             return table
         i += 1
@@ -108,26 +126,16 @@ def add_to_table(table, title_list):
 
 
 def update_table(table, id_, title_list):
-    id_exist = False
-    try:
-        for record in table:
-            if record[0] == id_[0]:
-                id_exist = True
-                new_row = ui.get_inputs(title_list, 'New Value:')
-                count = 1
-                for data in new_row:
-                    if data == '':
-                        count += 1
-                    else:
-                        record[count] = data
-                        count += 1
-
-        if id_exist == False:
-            raise ValueError('no record of that id')
-    except ValueError as msg:
-        ui.print_error_message(msg)
-
+    for record in table:
+    if record[0] == id_[0]:
+        new_row = ui.get_inputs(title_list, 'New Value:')
+        count = 1
+        for data in new_row:
+            if data != '':
+                record[count] = data
+            count += 1
     return table
+
 
 def modules_functions_to_dict(module_name):
     """function returns dict where are basic functions for all modules assigned to number inputted by user"""
@@ -205,3 +213,4 @@ def start_module(module_name,module_data_file):
                 return None
             else:
                 ui.print_error_message("Choose correct number")
+
