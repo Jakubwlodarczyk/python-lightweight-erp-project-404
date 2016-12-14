@@ -164,7 +164,7 @@ def which_year_max(table):
     profit_dict = {}
     profit = 0
     year = 0
-    for item in table:
+    for item in table:  # komentarz
         if item[3] not in profit_dict:
             if item[4] == 'in':
                 profit_dict[item[3]] = int(item[5])
