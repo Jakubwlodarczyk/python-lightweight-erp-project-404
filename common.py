@@ -106,11 +106,8 @@ def add_to_table(table, title_list):
 
 
 def update_table(table, id_, title_list):
-    id_exist = False
-    try:
         for record in table:
             if record[0] == id_[0]:
-                id_exist = True
                 new_row = ui.get_inputs(title_list, 'New Value:')
                 count = 1
                 for data in new_row:
@@ -119,10 +116,4 @@ def update_table(table, id_, title_list):
                     else:
                         record[count] = data
                         count += 1
-
-        if id_exist == False:
-            raise ValueError('no record of that id')
-    except ValueError as msg:
-        ui.print_error_message(msg)
-
-    return tablei
+    return table
