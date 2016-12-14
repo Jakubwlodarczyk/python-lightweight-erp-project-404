@@ -125,4 +125,4 @@ def update_table(table, id_, title_list):
     except ValueError as msg:
         ui.print_error_message(msg)
 
-    return table
+    return tablei
