@@ -2,7 +2,9 @@
 
 import random
 import ui
-
+import data_manager
+import crm.crm as crm
+import inventory.inventory as inventory
 # generate and return a unique and random string
 # other expectation:
 # - at least 2 special char()expect: ';'), 2 number, 2 lower and 2 upper case letter
@@ -129,19 +131,19 @@ def update_table(table, id_, title_list):
 
 def modules_functions_to_dict(module_name):
     """function returns dict where are basic functions for all modules assigned to number inputted by user"""
-    function_dict = {"1": "show_table(table)",
-                     "2": "add(table)" } #function to call only - not needed any input
+    function_dict = {"1": module_name+".show_table(table)",
+                     "2": module_name+".add(table)" } #function to call only - not needed any input
 
     input_rem_upd_label_word_dict = {"inventory": "item",
                                            "crm": "customer"} #module-depend word to use in input label
 
-    input_needed_function_dict = {"3": ("remove(table, id_)", ["Enter " + input_rem_upd_label_word_dict[module_name] + " to remove it: "]),
-                                  "4": ("update(table, id_)", ["Enter " + input_rem_upd_label_word_dict[module_name] + " to update it: "])}
+    input_needed_function_dict = {"3": (module_name+".remove(table, id_)", ["Enter " + input_rem_upd_label_word_dict[module_name] + " to remove it: "]),
+                                  "4": (module_name+".update(table, id_)", ["Enter " + input_rem_upd_label_word_dict[module_name] + " to update it: "])}
     #special functions of each names and result labels - stored as list (module-depend)
-    specials_functions_dict = {"inventory": {"5": ["get_available_items(table)", "Avaiable items:"],
-                                             "6": ["get_average_durability_by_manufacturers(table)", "Average durability for manufacurers"]},
-                                     "crm": {"5": ["get_longest_name_id(table)", "The longest name id"],
-                                             "6": ["get_subscribed_emails(table)", "Subscribers"]} }
+    specials_functions_dict = {"inventory": {"5": [module_name+".get_available_items(table)", "Avaiable items:"],
+                                             "6": [module_name+".get_average_durability_by_manufacturers(table)", "Average durability for manufacurers"]},
+                                     "crm": {"5": [module_name+".get_longest_name_id(table)", "The longest name id"],
+                                             "6": [module_name+".get_subscribed_emails(table)", "Subscribers"]} }
     #merge 3 dicts to one dict to return in two steps:
     function_dict.update(input_needed_function_dict)
     function_dict.update(specials_functions_dict[module_name])
@@ -172,3 +174,34 @@ def modules_table_first_row(module_name):
     modules_table_first_row_dict = {"inventory": ["Id", "Inventory item", "Manufacturer", "Purchase date", "Durability"],
                                           "crm": ["Id", "Customer name", "e-mail", "Is subscriber"] }
     return modules_table_first_row_dict[module_name]
+
+
+def start_module(module_name,module_data_file):
+        table = data_manager.get_table_from_file(module_data_file)
+        menu_title = modules_menu_title(module_name)
+        options = modules_options(module_name)
+        functions_dict = modules_functions_to_dict(module_name)
+
+        while True:
+            ui.print_menu(menu_title, options, 'Back to main')
+            function_choice = ui.get_inputs(["Please enter a number: "], "")[0]
+            if function_choice in functions_dict:
+                if type(functions_dict[function_choice]) == tuple:
+                    id_ = ui.get_inputs(functions_dict[function_choice][1], "")[0]
+                    exec(functions_dict[function_choice][0])
+                elif type(functions_dict[function_choice]) == list:
+                    if len(functions_dict[function_choice]) == 2:
+                        special_function_result = eval(functions_dict[function_choice][0])
+                        ui.print_result(special_function_result, functions_dict[function_choice][1])
+                    if len(functions_dict[function_choice]) == 3:
+                        question = ui.get_inputs(functions_dict[function_choice][1], "")[0]
+                        special_function_result = eval(functions_dict[function_choice][0])
+                        ui.print_result(special_function_result, functions_dict[function_choice][1])
+
+                else:
+                    exec(functions_dict[function_choice])
+            elif function_choice == "0":
+                data_manager.get_table_from_file(module_data_file)
+                return None
+            else:
+                ui.print_error_message("Choose correct number")

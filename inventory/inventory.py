@@ -28,31 +28,9 @@ def start_module():
         None
     """
     module_name = "inventory"
-    table = data_manager.get_table_from_file('inventory/inventory.csv')
-    menu_title = common.modules_menu_title(module_name)
-    options = common.modules_options(module_name)
-    functions_dict = common.modules_functions_to_dict(module_name)
-
-    while True:
-        ui.print_menu(menu_title, options, 'Back to main')
-        function_choice = ui.get_inputs(["Please enter a number: "], "")[0]
-        if function_choice in functions_dict:
-            if type(functions_dict[function_choice]) == list:
-                if len(functions_dict[function_choice]) == 2:
-                    special_function_result = eval(functions_dict[function_choice][0])
-                    ui.print_result(special_function_result, functions_dict[function_choice][1])
-            elif type(functions_dict[function_choice]) == tuple:
-                id_ = ui.get_inputs(functions_dict[function_choice][1], "")[0]
-                exec(functions_dict[function_choice][0])
-            else:
-                exec(functions_dict[function_choice])
-
-        elif function_choice == "0":
-            data_manager.write_table_to_file('inventory/inventory.csv', table)
-            return None
-        else:
-            ui.print_error_message("Choose correct number")
-
+    module_data_file = 'inventory/inventory.csv'
+    
+    common.start_module(module_name,module_data_file)
 
 
 
