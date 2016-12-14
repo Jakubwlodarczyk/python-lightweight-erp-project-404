@@ -128,4 +128,4 @@ def print_error_message(message):
     Returns:
         This function doesn't return anything it only prints to console.
     """
-    print("Error: ", message)
+    print("Error:", message)

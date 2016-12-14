@@ -41,19 +41,21 @@ def start_module():
         if option == "1":
             show_table(table)
         elif option == "2":
-            add(table)
+            table = add(table)
         elif option == "3":
-            remove(table, id_)
+            id_ = ui.get_inputs(["ID: "], "Please provide ID of record to remove")
+            table = remove(table, id_[0])
         elif option == "4":
-            update(table, id_)
+            id_ = ui.get_inputs(["ID: "], "Please provide ID of record to update")
+            table = update(table, id_[0])
         elif option == "5":
-            get_oldest_person(table)
+            ui.print_result(get_oldest_person(table), "Oldest persons")
         elif option == "6":
-            get_persons_closest_to_average(table)
+            ui.print_result(get_persons_closest_to_average(table), "Closest persons to average year")
         elif option == "0":
             break
         else:
-            raise KeyError("There is no such option.")
+            ui.print_error_message("There is no such option.")
 
 
 def show_table(table):
@@ -80,9 +82,9 @@ def add(table):
     Returns:
         Table with a new record
     """
-
-    # your code
-
+    inputs = ui.get_inputs(["Name and surname: ", "Birth date: "], "Please provide person data")
+    new_key = common.generate_random(table)
+    table.append([new_key, inputs[0], inputs[1]])
     return table
 
 
@@ -97,10 +99,13 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
-
-    # your code
-
-    return table
+    i = 0
+    while i < len(table):
+        if id_ == table[i][0]:
+            del table[i]
+            return table
+        i += 1
+    ui.print_error_message("Record with this ID not found")
 
 
 def update(table, id_):
@@ -114,10 +119,17 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-
-    # your code
-
-    return table
+    if id_ not in [record[0] for record in table]:
+        ui.print_error_message("Record with this ID not found")
+        return table
+    inputs = ui.get_inputs(["Name and surname: ", "Birth date: "], "Please provide person data to update")
+    i = 0
+    while i < len(table):
+        if id_ == table[i][0]:
+            table[i][1], table[i][2] = inputs[0], inputs[1]
+            return table
+        i += 1
+    #ui.print_error_message("Record with this ID not found")
 
 
 # special functions:
@@ -133,8 +145,8 @@ def get_oldest_person(table):
     while i < len(table):
         if int(table[i][2]) == oldest_year:
             oldest_person.append(table[i][1])
+            return oldest_person
         i += 1
-    ui.print_result(oldest_person, "Oldest persons")
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
@@ -156,4 +168,4 @@ def get_persons_closest_to_average(table):
         if list_of_abs[i] == min_from_abs:
             closest_person.append(table[i][1])
         i += 1
-    ui.print_result(closest_person, "Closest persons to average year")
+    return closest_person
