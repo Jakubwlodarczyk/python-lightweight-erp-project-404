@@ -36,7 +36,7 @@ def generate_random(table):
         for i in range(2):
             generated += str(special_chars[random.randint(0, len(special_chars)-1)])
             generated += str(digits[random.randint(0, len(digits)-1)])
-            generated += str(alphabet[random.randint(0, len(alphabet)-1)])g
+            generated += str(alphabet[random.randint(0, len(alphabet)-1)])
             generated += str(alphabet[random.randint(0, len(alphabet)-1)].upper())
         if generated in id_table:
             is_unique = False
@@ -52,3 +52,30 @@ def mean_from_list(num_list):
     if mean.is_integer():
         mean = int(mean)
     return mean
+
+
+def modules_functions_to_dict(module_name):
+    standard_function_dict = {"1": "show_table(table[:])", "2": "add(table)", "3": "input_prep(table, 'remove')", "4": "input_prep(table, 'update')", "5": "special_function(table, '1')", "6": "special_function(table, '2')" }
+    final_function_dict = standard_function_dict
+    #if in any module will be different order or for example more special function, standard dict can be modified in according to module_name
+    return final_function_dict
+
+
+def modules_special_functions(module):
+    specials_in_modules_dict = {"inventory": {"1": "get_available_items(table)", "2": "get_average_durability_by_manufacturers(table)"}}
+    return specials_in_modules_dict[module]
+
+
+def modules_menu_title(module):
+    menu_title_dict = {"inventory": "Inventory menu"}
+    return menu_title_dict[module]
+
+
+def modules_options(module):
+    modules_options_dict = {"inventory": ["Show inventory table", "Add to inventory", "Remove from inventory", "Update inventory", "Which items have not exceeded their durability yet?", "What are the average durability times for each manufacturer?"] }
+    return modules_options_dict[module]
+
+
+def modules_table_first_row(module):
+    modules_table_first_row_dict = {"inventory": ["Id", "Inventory item", "Manufacturer", "Purchase date", "Durability"]}
+    return modules_table_first_row_dict[module]
