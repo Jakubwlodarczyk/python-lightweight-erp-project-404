@@ -56,7 +56,6 @@ def mean_from_list(num_list):
     for num in num_list:  # making sum of number in list
         num_sum += int(num)
     mean = num_sum / len(num_list)  # dividing by
-    mean = round(mean)
     return mean
 
 
