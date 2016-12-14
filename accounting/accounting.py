@@ -201,7 +201,7 @@ def which_year_max(table):
         if v > profit:
             profit = v
             year = k
-    return str(year)
+    return int(year)
 
 
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
@@ -209,15 +209,17 @@ def which_year_max(table):
 def avg_amount(table, year):
     items = 0
     profit = 0
+    title_list = ['id', 'month', 'day', 'year', 'type', 'amount']
+    ui.print_table(table, title_list)
     # your code
     for item in table:
-        if item[3] == year:
+        if int(item[3]) == int(year):
             items += 1
+            print('To jest zmienna items {}'.format(items))
             if item[4] == 'in':
                 profit += int(item[5])
             else:
                 profit -= int(item[5])
 
     avg = profit / items
-    return str(avg)
-    pass
+    return avg

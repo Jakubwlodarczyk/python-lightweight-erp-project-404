@@ -1,6 +1,7 @@
 # implement commonly used functions here
 
 import random
+import ui
 
 
 # generate and return a unique and random string
@@ -51,3 +52,46 @@ def mean_from_list(num_list):
     if mean.is_integer():
         mean = int(mean)
     return mean
+
+
+def is_this_record_exist(table, id_):
+    """
+    Checking if user input id exist in your table
+
+    Args:
+        table: your table
+        id_: user input id to check
+
+    Returns:
+        True if this record exist, then you can use your function update or remove
+        False if record not exitst and print error message
+
+    Example usage:
+        if common.is_this_record_exist(table, id_[0]):
+            table = update(table, id_[0])
+    """
+    if id_ not in [record[0] for record in table]:
+        ui.print_error_message("Record with this ID not found")
+        return False
+    return True
+
+
+def remove_record_from_table(table, id_):
+    """
+    Remove record from your table by ID.
+    Important! Before you use this function check
+    if given ID exist in your table by using is_this_record_exist function.
+
+    Args:
+        table: your table
+        id_: user input id to remove
+
+    Returns:
+        Table with removed record
+    """
+    i = 0
+    while i < len(table):
+        if id_ == table[i][0]:
+            del table[i]
+            return table
+        i += 1
