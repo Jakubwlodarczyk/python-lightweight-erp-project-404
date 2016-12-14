@@ -98,8 +98,8 @@ def remove_record_from_table(table, id_):
 
 
 def add_to_table(table, title_list):
-    new_row = ui.get_inputs(list_labels, 'What you wanna to add?')
-    new_id = common.generate_random(table)
+    new_row = ui.get_inputs(title_list, 'What you wanna to add?')
+    new_id = generate_random(table)
     new_row.insert(0, new_id)
     table.append(new_row)
     return table
