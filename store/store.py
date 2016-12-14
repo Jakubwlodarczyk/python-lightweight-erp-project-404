@@ -50,9 +50,15 @@ def start_module():
         elif option == "2":
             add(table)
         elif option == "3":
-            remove(table, id_)
+            id_to_remove = ui.get_inputs(['Enter id to remove: '], '')
+            if common.is_this_record_exist(table, id_to_remove[0]):
+                remove(table, id_to_remove)
         elif option == "4":
-            update(table, id_)
+            try:
+                id_to_update = ui.get_inputs(['Enter id to update'], '')
+                update(table, id_to_update)
+            except ValueError as msg:
+                ui.print_error_message(msg)
         elif option == "5":
             get_counts_by_manufacturers(table)
         elif option == "6":
@@ -91,16 +97,15 @@ def add(table):
     Returns:
         Table with a new record
     """
-    list_labels = ['Title',
-                   'Manufacturer',
-                   'Price',
-                   'In_stock']
-    new_row = ui.get_inputs(list_labels, 'What you wanna to add?')
-    new_id = common.generate_random(table)
-    new_row.insert(0, new_id)
-    table.append(new_row)
+    title_list = ['Title',
+                  'Manufacturer',
+                  'Price',
+                  'In_stock']
+
+    common.add_to_table(table, title_list)
 
     return table
+    pass
 
 
 def remove(table, id_):
@@ -114,15 +119,10 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
-    count = 0
-    for i in range(len(table)):
-        if str(id_[0]) == str(table[i][0]):
-            table.remove(table[i])
-            count = 1
-    if count == 0:
-        raise ValueError('No record of that id')
+    table = common.remove_record_from_table(table, id_[0])
 
     return table
+    pass
 
 
 def update(table, id_):
@@ -142,21 +142,9 @@ def update(table, id_):
                    'Price',
                    'In_stock']
 
-    i = 0
-    count = 0
-    while i < len(table):
-        if str(id_[0]) == str(table[i][0]):
-            new_row = ui.get_inputs(list_labels, 'New Value:')
-            new_row.insert(0, table[i][0])
-            for item in range(len(table[i]) - 1):
-                if list_labels[count] != '':
-                    table[i][count] = new_row[count]
-                count += 1
-        i += 1
-    print(table)
+    common.update_table(table, id_, list_labels)
     return table
-
-    return table
+    pass
 
 
 # special functions:
