@@ -35,10 +35,10 @@ def generate_random(table):
     while not is_unique:
         is_unique = True
         for i in range(2):
-            generated += str(special_chars[random.randint(0, len(special_chars)-1)])
-            generated += str(digits[random.randint(0, len(digits)-1)])
-            generated += str(alphabet[random.randint(0, len(alphabet)-1)])
-            generated += str(alphabet[random.randint(0, len(alphabet)-1)].upper())
+            generated += str(special_chars[random.randint(0, len(special_chars) - 1)])
+            generated += str(digits[random.randint(0, len(digits) - 1)])
+            generated += str(alphabet[random.randint(0, len(alphabet) - 1)])
+            generated += str(alphabet[random.randint(0, len(alphabet) - 1)].upper())
         if generated in id_table:
             is_unique = False
     return generated
@@ -53,9 +53,9 @@ def sum_numbers(numbers_list):
 
 def mean_from_list(num_list):
     num_sum = 0
-    for num in num_list: #making sum of number in list
+    for num in num_list:  # making sum of number in list
         num_sum += int(num)
-    mean = num_sum / len(num_list) #dividing by
+    mean = num_sum / len(num_list)  # dividing by
     if mean.is_integer():
         mean = int(mean)
     return mean
@@ -102,3 +102,25 @@ def remove_record_from_table(table, id_):
             del table[i]
             return table
         i += 1
+
+
+def add_to_table(table, title_list):
+    new_row = ui.get_inputs(title_list, 'What you wanna to add?')
+    new_id = generate_random(table)
+    new_row.insert(0, new_id)
+    table.append(new_row)
+    return table
+
+
+def update_table(table, id_, title_list):
+    for record in table:
+        if record[0] == id_[0]:
+            new_row = ui.get_inputs(title_list, 'New Value:')
+            count = 1
+            for data in new_row:
+                if data == '':
+                    count += 1
+                else:
+                    record[count] = data
+                    count += 1
+    return table

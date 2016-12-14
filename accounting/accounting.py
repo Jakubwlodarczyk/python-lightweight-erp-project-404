@@ -26,11 +26,9 @@ def choose(table):
     elif option == "2":
         add(table)
     elif option == "3":
-        try:
-            id_to_remove = ui.get_inputs(['Enter id to remove: '], '')
+        id_to_remove = ui.get_inputs(['Enter id to remove: '], '')
+        if common.is_this_record_exist(table, id_to_remove[0]):
             remove(table, id_to_remove)
-        except ValueError as msg:
-            ui.print_error_message(msg)
     elif option == "4":
         try:
             id_to_update = ui.get_inputs(['Enter id to update'], '')
@@ -116,10 +114,7 @@ def add(table):
                    'Year',
                    'Type',
                    'Amount']
-    new_row = ui.get_inputs(list_labels, 'What you wanna to add?')
-    new_id = common.generate_random(table)
-    new_row.insert(0, new_id)
-    table.append(new_row)
+    table = common.add_to_table(table, list_labels)
     return table
 
 
@@ -134,14 +129,7 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
-    count = 0
-    for i in range(len(table)):
-        if str(id_[0]) == str(table[i][0]):
-            table.remove(table[i])
-            count = 1
-    if count == 0:
-        raise ValueError('No record of that id')
-
+    table = common.remove_record_from_table(table, id_[0])
     return table
 
 
@@ -162,18 +150,8 @@ def update(table, id_):
                    'Type',
                    'Amount']
     # your code
-    i = 0
-    count = 0
-    while i < len(table):
-        if str(id_[0]) == str(table[i][0]):
-            new_row = ui.get_inputs(list_labels, 'New Value:')
-            new_row.insert(0, table[i][0])
-            for item in range(len(table[i]) - 1):
-                if list_labels[count] != '':
-                    table[i][count] = new_row[count]
-                count += 1
-        i += 1
-    print(table)
+    common.update_table(table, id_, list_labels)
+
     return table
 
 
@@ -210,12 +188,10 @@ def avg_amount(table, year):
     items = 0
     profit = 0
     title_list = ['id', 'month', 'day', 'year', 'type', 'amount']
-    ui.print_table(table, title_list)
     # your code
     for item in table:
         if int(item[3]) == int(year):
             items += 1
-            print('To jest zmienna items {}'.format(items))
             if item[4] == 'in':
                 profit += int(item[5])
             else:
