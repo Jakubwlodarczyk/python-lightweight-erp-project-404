@@ -25,17 +25,17 @@ def print_table(table, title_list):
     work_table = table[:]
     work_table.insert(0, title_list)
     widths = [max(map(len, col)) for col in zip(*work_table)]
-    sum_of_widths = common.sum_numbers(widths) + len(work_table[0])*2 + len(work_table[0])-1
+    sum_of_widths = common.sum_numbers(widths) + len(work_table[0]) * 2 + len(work_table[0]) - 1
     for index, row in enumerate(work_table):
-        print("-"*sum_of_widths)
+        print("-" * sum_of_widths)
         if index == 0:
             print(BOLD, end="")
-            print("|"+"  ".join((val.rjust(width)+"|" for val, width in zip(row, widths))))
+            print("|" + "  ".join((val.rjust(width) + "|" for val, width in zip(row, widths))))
             print(END, end="")
         else:
-            print("|"+"  ".join((val.rjust(width)+"|" for val, width in zip(row, widths))))
-    print("-"*sum_of_widths)
-    input("Enter to continue..")
+            print("|" + "  ".join((val.rjust(width) + "|" for val, width in zip(row, widths))))
+    print("-" * sum_of_widths)
+
 
 def print_result(result, label):
     """

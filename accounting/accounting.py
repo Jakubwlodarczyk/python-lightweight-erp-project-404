@@ -27,24 +27,19 @@ def choose(table):
         add(table)
     elif option == "3":
         id_to_remove = ui.get_inputs(['Enter id to remove: '], '')
-        if common.is_this_record_exist(table, id_to_remove[0]):
+        if common.is_this_record_exist(table, id_to_remove):
             remove(table, id_to_remove)
     elif option == "4":
-        try:
-            id_to_update = ui.get_inputs(['Enter id to update'], '')
+        id_to_update = ui.get_inputs(['Enter id to update'], '')
+        if common.is_this_record_exist(table, id_to_update):
             update(table, id_to_update)
-        except ValueError as msg:
-            ui.print_error_message(msg)
     elif option == "5":
         year = which_year_max(table)
-        ui.print_result(year, 'Best profit year')
+        ui.print_result(str(year), 'Best profit year')
     elif option == "6":
-        try:
-            year = ui.get_inputs(['which year?'], '')
-            answear = avg_amount(table, year[0])
-        except ValueError as msg:
-            ui.print_error_message(msg)
-        ui.print_result(answear, 'Averge profit')
+        year = ui.get_inputs(['which year?'], '')
+        answear = avg_amount(table, year[0])
+        ui.print_result(str(answear), 'Averge profit')
     elif option == "0":
         return False
     else:
@@ -129,7 +124,7 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
-    table = common.remove_record_from_table(table, id_[0])
+    table = common.remove_record_from_table(table, id_)
     return table
 
 
