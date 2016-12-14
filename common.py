@@ -1,7 +1,7 @@
 # implement commonly used functions here
 
 import random
-
+import ui
 
 # generate and return a unique and random string
 # other expectation:
@@ -40,7 +40,7 @@ def generate_random(table):
             generated += str(alphabet[random.randint(0, len(alphabet)-1)].upper())
         if generated in id_table:
             is_unique = False
-        print(generated)
+
     return generated
 
 
@@ -54,25 +54,100 @@ def mean_from_list(num_list):
     return mean
 
 
+def is_this_record_exist(table, id_):
+    """
+    Checking if user input id exist in your table
+
+    Args:
+        table: your table
+        id_: user input id to check
+
+    Returns:
+        True if this record exist, then you can use your function update or remove
+        False if record not exitst and print error message
+
+    Example usage:
+        if common.is_this_record_exist(table, id_[0]):
+            table = update(table, id_[0])
+    """
+    if id_ not in [record[0] for record in table]:
+        ui.print_error_message("Record with this ID not found")
+        return False
+    return True
+
+
+def remove_record_from_table(table, id_):
+    """
+    Remove record from your table by ID.
+    Important! Before you use this function check
+    if given ID exist in your table by using is_this_record_exist function.
+
+    Args:
+        table: your table
+        id_: user input id to remove
+
+    Returns:
+        Table with removed record
+    """
+    i = 0
+    while i < len(table):
+        if id_ == table[i][0]:
+            del table[i]
+            return table
+        i += 1
+
+
+def add_to_table(table, title_list):
+    new_row = ui.get_inputs(title_list, 'What you wanna to add?')
+    new_id = generate_random(table)
+    new_row.insert(0, new_id)
+    table.append(new_row)
+    return table
+
+
+def update_table(table, id_, title_list):
+    id_exist = False
+    try:
+        for record in table:
+            if record[0] == id_[0]:
+                id_exist = True
+                new_row = ui.get_inputs(title_list, 'New Value:')
+                count = 1
+                for data in new_row:
+                    if data == '':
+                        count += 1
+                    else:
+                        record[count] = data
+                        count += 1
+
+        if id_exist == False:
+            raise ValueError('no record of that id')
+    except ValueError as msg:
+        ui.print_error_message(msg)
+
+    return table
+
 def modules_functions_to_dict(module_name):
     """function returns dict where are basic functions for all modules assigned to number inputted by user"""
-    standard_function_dict = {"1": "show_table(table[:])", "2": "add(table)", "3": "input_prep(table, 'remove')", "4": "input_prep(table, 'update')", "5": "special_function(table, '1')", "6": "special_function(table, '2')" }
-    final_function_dict = standard_function_dict
-    #if in any module will be different order or for example more special function, standard dict can be modified in according to module_name
-    return final_function_dict
+    function_dict = {"1": "show_table(table)",
+                     "2": "add(table)" } #function to call only - not needed any input
+
+    input_rem_upd_label_word_dict = {"inventory": "item",
+                                           "crm": "customer"} #module-depend word to use in input label
+
+    input_needed_function_dict = {"3": ("remove(table, id_)", ["Enter " + input_rem_upd_label_word_dict[module_name] + " to remove it: "]),
+                                  "4": ("update(table, id_)", ["Enter " + input_rem_upd_label_word_dict[module_name] + " to update it: "])}
+    #special functions of each names and result labels - stored as list (module-depend)
+    specials_functions_dict = {"inventory": {"5": ["get_available_items(table)", "Avaiable items:"],
+                                             "6": ["get_average_durability_by_manufacturers(table)", "Average durability for manufacurers"]},
+                                     "crm": {"5": ["get_longest_name_id(table)", "The longest name id"],
+                                             "6": ["get_subscribed_emails(table)", "Subscribers"]} }
+    #merge 3 dicts to one dict to return in two steps:
+    function_dict.update(input_needed_function_dict)
+    function_dict.update(specials_functions_dict[module_name])
+    return function_dict
 
 
-def modules_special_functions(module_name):
-    """function returns dict with special functions name, which are connected with specific module (switch by module_name)"""
-    specials_in_modules_dict = {"inventory": {"1": "get_available_items(table)", "2": "get_average_durability_by_manufacturers(table)"},
-                                "crm": {"1": "get_longest_name_id(table)", "2": "get_subscribed_emails(table)"} }
-    return specials_in_modules_dict[module_name]
-
-def modules_special_functions_labels(module_name):
-    """function returns dict with special functions name, which are connected with specific module (switch by module_name)"""
-    specials_in_modules_dict = {"inventory": {"1": "Avaiable items:", "2": "Average durabity for manufacurers"},
-                                "crm": {"1": "The longest name id", "2": "Subscribers"} }
-    return specials_in_modules_dict[module_name]
 
 
 def modules_menu_title(module_name):
@@ -86,14 +161,14 @@ def modules_options(module_name):
     modules_options_dict = {"inventory": ["Show inventory table", "Add to inventory", "Remove from inventory", "Update inventory",
                                             "Which items have not exceeded their durability yet?",
                                             "What are the average durability times for each manufacturer?"],
-                            "crm": ["Show CRM table", "Add to CRM", "Remove from CRM", "Update CRM",
-                                                                    "What is the id of the customer with the longest name?",
-                                                                    "Which customers has subscribed to the newsletter?"] }
+                                  "crm": ["Show CRM table", "Add to CRM", "Remove from CRM", "Update CRM",
+                                            "What is the id of the customer with the longest name?",
+                                            "Which customers has subscribed to the newsletter?"] }
     return modules_options_dict[module_name]
 
 
 def modules_table_first_row(module_name):
     """function returns list with table titles (first row) connected to specific module"""
     modules_table_first_row_dict = {"inventory": ["Id", "Inventory item", "Manufacturer", "Purchase date", "Durability"],
-                                    "crm": ["Id", "Customer name", "e-mail", "Is subscriber"] }
+                                          "crm": ["Id", "Customer name", "e-mail", "Is subscriber"] }
     return modules_table_first_row_dict[module_name]

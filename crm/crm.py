@@ -26,24 +26,26 @@ def start_module():
         None
     """
 
-    table = data_manager.get_table_from_file('crm/customers.csv')
-    menu_title = common.modules_menu_title("crm")
-    options = common.modules_options("crm")
-    crm_functions_dict = common.modules_functions_to_dict("crm")
-    menu = True
-    while menu == True:
+    module_name = "crm"
+    table = data_manager.get_table_from_file('inventory/inventory.csv')
+    menu_title = common.modules_menu_title(module_name)
+    options = common.modules_options(module_name)
+    functions_dict = common.modules_functions_to_dict(module_name)
+
+    while True:
         ui.print_menu(menu_title, options, 'Back to main')
         function_choice = ui.get_inputs(["Please enter a number: "], "")[0]
-        if function_choice in crm_functions_dict:
-            exec(crm_functions_dict[function_choice])
-            menu = False
+        if function_choice in functions_dict:
+            if type(functions_dict[function_choice]) != tuple: #functions without input
+                exec(functions_dict[function_choice])
+            elif len(functions_dict[function_choice]) > 1: #functions with input
+                id_ = ui.get_inputs(functions_dict[function_choice][1], "")[0]
+                exec(functions_dict[function_choice][0])
         elif function_choice == "0":
-            #data_manager.write_table_to_file('crm/customers.csv', table)
+            data_manager.write_table_to_file('inventory/inventory.csv', table)
             return None
         else:
             ui.print_error_message("Choose correct number")
-    start_module()
-
 
 
 def show_table(table):
@@ -57,7 +59,7 @@ def show_table(table):
         None
     """
 
-    title_list = common.modules_table_first_row("crm") #common function
+    title_list = common.modules_table_first_row("crm")
     ui.print_table(table, title_list)
 
 
@@ -81,7 +83,7 @@ def input_prep(table, function):
     function_dict = {"remove": "remove(table, inputted)", "update": "update(table, inputted)"}
     text_dict = {"remove": "Enter id to remove:", "update": "Enter id to remove:"  }
     inputted =  ui.get_inputs([text_dict[function]], '')[0]
-    exec(function_dict[function])
+    table = eval(function_dict[function])
 
 def remove(table, id_):
     """
