@@ -65,7 +65,7 @@ def is_this_record_exist(table, id_):
     Returns:
         True if this record exist, then you can use your function update or remove
         False if record not exitst and print error message
-        
+
     Example usage:
         if common.is_this_record_exist(table, id_[0]):
             table = update(table, id_[0])
@@ -74,3 +74,12 @@ def is_this_record_exist(table, id_):
         ui.print_error_message("Record with this ID not found")
         return False
     return True
+
+
+def remove_record_from_table(table, id_):
+    i = 0
+    while i < len(table):
+        if id_ == table[i][0]:
+            del table[i]
+            return table
+        i += 1
