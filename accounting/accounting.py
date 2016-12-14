@@ -188,7 +188,6 @@ def avg_amount(table, year):
     items = 0
     profit = 0
     title_list = ['id', 'month', 'day', 'year', 'type', 'amount']
-    ui.print_table(table, title_list)
     # your code
     for item in table:
         if int(item[3]) == int(year):

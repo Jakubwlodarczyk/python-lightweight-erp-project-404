@@ -35,11 +35,6 @@ def start_module():
         'Get count by manufactures',
         'Get average by manufacturer']
 
-    manufacturer = []
-    for i in table:
-        if i[2] not in manufacturer:
-            manufacturer.append(i[2])
-
     while True:
         ui.print_menu('Store menu', options, 'Back to main menu')
 
@@ -60,9 +55,13 @@ def start_module():
             except ValueError as msg:
                 ui.print_error_message(msg)
         elif option == "5":
-            get_counts_by_manufacturers(table)
+            manufacture_dict = get_counts_by_manufacturers(table)
+            ui.print_result(manufacture_dict, 'Games by manufacture')
         elif option == "6":
-            get_average_by_manufacturer(table, manufacturer)
+            inputs = ui.get_inputs(['Enter the manufacture'], '')
+            manufacturer = inputs[0]
+            average = get_average_by_manufacturer(table, manufacturer)
+            ui.print_result(str(average), 'Average: ')
         elif option == "0":
             break
         else:
@@ -162,7 +161,6 @@ def get_counts_by_manufacturers(table):
         elif i[2] in manufacture_dict:
             manufacture_dict[i[2]] += 1
 
-    ui.print_result(manufacture_dict, 'Games by manufacture')
     return manufacture_dict
     pass
 
@@ -171,12 +169,14 @@ def get_counts_by_manufacturers(table):
 # return type: number
 def get_average_by_manufacturer(table, manufacturer):
 
-    inputs = ui.get_inputs(['Enter the manufacture'], '')
-    choosen_manufacture = inputs[0]
-    if choosen_manufacture not in manufacturer:
+    manufacturer_list = []
+    for i in table:
+        if i[2] not in manufacturer_list:
+            manufacturer_list.append(i[2])
+    if manufacturer not in manufacturer_list:
         ui.print_error_message('Manufacture is not in list')
     else:
-        list_of_stock_items = [int(record[4]) for record in table if record[2] == choosen_manufacture]
+        list_of_stock_items = [int(record[4]) for record in table if record[2] == manufacturer]
         sum_items = 0
         for i in list_of_stock_items:
             sum_items += i

@@ -44,6 +44,13 @@ def generate_random(table):
     return generated
 
 
+def sum_numbers(numbers_list):
+    output = 0
+    for number in numbers_list:
+        output += number
+    return output
+
+
 def mean_from_list(num_list):
     num_sum = 0
     for num in num_list:  # making sum of number in list
