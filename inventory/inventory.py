@@ -29,7 +29,7 @@ def start_module():
     """
     module_name = "inventory"
     module_data_file = 'inventory/inventory.csv'
-    
+
     common.start_module(module_name,module_data_file)
 
 
@@ -112,8 +112,10 @@ def special_function(table, function_num):
 # @table: list of lists
 def get_available_items(table):
     import datetime
-    #table = list(map(lambda x: int(x[-1]) and int(x[-2]), table))
-    return list(filter(lambda x: int(x[-1])+int(x[-2]) >= datetime.date.today().year, table))
+    for i in range(len(table)):
+        table[i][-1] = int(table[i][-1])
+        table[i][-2] = int(table[i][-2])
+    return list(filter(lambda x: (x[-1])+(x[-2]) >= datetime.date.today().year, table))
 
 
 # the question: What are the average durability times for each manufacturer?
