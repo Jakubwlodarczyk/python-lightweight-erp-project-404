@@ -134,9 +134,7 @@ def validate(row, title_list, type_list):
 
     for i in range(len(row)):
         switch = True
-        if row[i] == '':
-            pass
-        elif type_list[i] == 'str':
+        if type_list[i] == 'str':
             pass
         elif type_list[i] == 'int':
             while switch:
@@ -163,7 +161,7 @@ def validate(row, title_list, type_list):
         elif type_list[i] == 'month':
             while switch:
                 if row[i].isdigit():
-                    if 0 < int(row[i]) < 12:
+                    if 0 < int(row[i]) < 13:
                         switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
@@ -205,13 +203,16 @@ def update_table(table, id_, title_list, type_list):
     Returns:
         table with updated record
     """
-    for record in table:
-        if record[0] == id_[0]:
+    record = 0
+    for record in range(len(table)):
+        if table[record][0] == id_[0]:
             new_row = ui.get_inputs(title_list, 'New Value:')
+            i = 0
+            while i < len(new_row):
+                if new_row[i] == '':
+                    new_row[i] = table[record][i + 1]
+                i += 1
             new_row = validate(new_row, title_list, type_list)
-            count = 1
-            for data in new_row:
-                if data != '':
-                    record[count] = data
-                count += 1
+            new_row.insert(0, table[record][0])
+            table[record] = new_row
     return table
