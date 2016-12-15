@@ -44,11 +44,13 @@ def start_module():
         elif option == "2":
             add(table)
         elif option == "3":
-            id_ = get_id(table)
-            remove(table, id_)
+            id_ = ui.get_inputs(["ID: "], "Please provide ID of record to remove")
+            if common.is_this_record_exist(table, id_):
+                table = remove(table, id_)
         elif option == "4":
-            id_ = get_id(table)
-            update(table, id_)
+            id_ = ui.get_inputs(["ID: "], "Please provide ID of record to update")
+            if common.is_this_record_exist(table, id_):
+                table = update(table, id_)
         elif option == "5":
             ui.print_result(get_lowest_price_item_id(table), 'Item ID with lowest price')
         elif option == "6":
@@ -92,23 +94,9 @@ def add(table):
     Returns:
         Table with a new record
     """
-    user_input = ["Title", "Price", "Month", "Day", "Year"]
-    title = "Please input required data"
-    is_correct_input = False
-    while not is_correct_input:
-        inputs = ui.get_inputs(user_input, title)
-        try:
-            test = int(inputs[1]) + int(inputs[2]) + int(inputs[3]) + int(inputs[4])
-        except ValueError:
-            ui.print_error_message("Incorect input. Please try again.")
-            continue
-        if int(inputs[2]) > 12 or int(inputs[3]) > 31 or int(inputs[4]) > 2100:
-            ui.print_error_message("Incorect date. Please try again.")
-            continue
-        is_correct_input = True
-    id_ = common.generate_random(table)
-    inputs.insert(0, id_)
-    table.append(inputs)
+    title_list = ["Title", "Price", "Month", "Day", "Year"]
+    type_list = ["str", "int", "month", "day", "int"]
+    table = common.add_to_table(table, title_list, type_list)
     return table
 
 
@@ -145,9 +133,7 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
-
-    index = find_index_table(table, id_)
-    del table[index]
+    table = common.remove_record_from_table(table, id_)
     return table
 
 
@@ -162,24 +148,9 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-    index = find_index_table(table, id_)
-    user_input = ["Title", "Price", "Month", "Day", "Year"]
-    title = "Please input required data"
-    is_correct_input = False
-    while not is_correct_input:
-        inputs = ui.get_inputs(user_input, title)
-        try:
-            test = int(inputs[1]) + int(inputs[2]) + int(inputs[3]) + int(inputs[4])
-        except ValueError:
-            ui.print_error_message("Incorect input. Please try again.")
-            continue
-        if int(inputs[2]) > 12 or int(inputs[3]) > 31 or int(inputs[4]) > 2100:
-            ui.print_error_message("Incorect date. Please try again.")
-            continue
-        is_correct_input = True
-    inputs.insert(0, id_)
-    del table[index]
-    table.insert(index, inputs)
+    title_list = ["Title", "Price", "Month", "Day", "Year"]
+    type_list = ["str", "int", "month", "day", "int"]
+    table = common.update_table(table, id_, title_list, type_list)
     return table
 
 
@@ -230,7 +201,7 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
             if sum_of_table < sum_of_input_to:
                 table_output.append(row)
     title_list = ["Id", "Title", "Price", "Month", "Day", "Year"]
-    #ui.print_table(table_output, title_list)
+    ui.print_table(table_output, title_list)
     for row in table_output:
         row[2], row[5], row[3], row[4] = int(row[2]), int(row[5]), int(row[3]), int(row[4])
     return table_output
