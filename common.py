@@ -26,7 +26,6 @@ def generate_random(table):
     digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
                 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-
     generated = ''
     is_unique = False
     id_table = []
@@ -45,6 +44,15 @@ def generate_random(table):
 
 
 def sum_numbers(numbers_list):
+    """
+    Sums numbers
+
+    Args:
+        numbers_list: list of numbers to sum
+
+    Returns:
+        Sum of numbers
+    """
     output = 0
     for number in numbers_list:
         output += number
@@ -174,7 +182,7 @@ def add_to_table(table, title_list, type_list):
 
     Args:
         table: table to add new record to
-        title_list: list of varibal names to add 
+        title_list: list of varibal names to add
         type_list: list of varibal types to add
 
     Returns:
@@ -195,7 +203,7 @@ def update_table(table, id_, title_list, type_list):
     Args:
         table: list in which record should be updated
         id_ (str): id of a record to update
-        title_list: list of varibal names to add 
+        title_list: list of varibal names to add
         type_list: list of varibal types to add
 
     Returns:
