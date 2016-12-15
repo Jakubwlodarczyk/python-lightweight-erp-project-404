@@ -201,6 +201,7 @@ def get_average_by_manufacturer(table, manufacturer):
     if manufacturer not in manufacturer_list:
         ui.print_error_message('Manufacture is not in list')
     else:
+        # create a list of in_stock value, finded in table, by manufacture
         list_of_stock_items = [int(record[4]) for record in table if record[2].lower() == manufacturer]
         sum_items = 0
         for i in list_of_stock_items:
