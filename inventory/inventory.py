@@ -30,10 +30,46 @@ def start_module():
     module_name = "inventory"
     module_data_file = 'inventory/inventory.csv'
 
-    common.start_module(module_name,module_data_file)
 
+    table = data_manager.get_table_from_file(module_data_file)
+    #menu_title = modules_menu_title(module_name)
+    #options = modules_options(module_name)
+    functions_dict = {"1": (show_table, "Show inventory table", "exec_only"),
+                      "2": (add, "Add to inventory"),
+                      "3": (remove, "Remove from inventory"),
+                      "4": (update, "Update inventory"),
+                      "5": (get_available_items, "Which items have not exceeded their durability yet?"),
+                      "6": (get_average_durability_by_manufacturers, "What are the average durability times for each manufacturer?")}
 
+    options = [""]*len(functions_dict)
+    for function in functions_dict:
+        options[int(function)-1] = functions_dict[function][1]
 
+    #while True:
+    ui.print_menu("Inventory menu", options, 'Back to main')
+    function_choice = ui.get_inputs(["Please enter a number: "], "")[0]
+    if function_choice in functions_dict:
+        if functions_dict[function_choice] == "1":
+
+            print("asdf")
+    #         if functions_dict[function_choice][-1] == "input_needed":
+    #             id_ = ui.get_inputs(functions_dict[function_choice][1], "")[0]
+    #             exec(functions_dict[function_choice][0])
+    #         if functions_dict[function_choice][-1] == "special":
+    #             special_function_result = eval(functions_dict[function_choice][0])
+    #             ui.print_result(special_function_result, functions_dict[function_choice][1])
+    #         if functions_dict[function_choice][-1] == "special_with_input":
+    #             question = ui.get_inputs(functions_dict[function_choice][1], "")[0]
+    #             special_function_result = eval(functions_dict[function_choice][0])
+    #             ui.print_result(special_function_result, functions_dict[function_choice][1])
+    #
+    #
+    #     elif function_choice == "0":
+    #         data_manager.get_table_from_file(module_data_file)
+    #         return None
+    #     else:
+    #         ui.print_error_message("Choose correct number")
+    #
 
 
 def show_table(table):
@@ -95,12 +131,6 @@ def update(table, id_):
     title_list = common.modules_table_first_row("inventory")
     common.update_table(table, id_, title_list)
     return table
-
-def special_function(table, function_num):
-
-    function_dict = common.modules_special_functions("inventory")
-    function_label = common.modules_special_functions_labels("inventory")
-
 
 
 # special functions:
