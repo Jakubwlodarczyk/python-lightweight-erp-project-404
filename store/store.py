@@ -27,6 +27,7 @@ def start_module():
     """
 
     table = data_manager.get_table_from_file('store/games_test.csv')
+
     options = [
         'Show Table',
         'Add to Table',
@@ -46,7 +47,7 @@ def start_module():
             add(table)
         elif option == "3":
             id_to_remove = ui.get_inputs(['Enter id to remove: '], '')
-            if common.is_this_record_exist(table, id_to_remove[0]):
+            if common.is_this_record_exist(table, id_to_remove):
                 remove(table, id_to_remove)
         elif option == "4":
             try:
@@ -118,7 +119,7 @@ def remove(table, id_):
     Returns:
         Table without specified record.
     """
-    table = common.remove_record_from_table(table, id_[0])
+    table = common.remove_record_from_table(table, id_)
 
     return table
     pass

@@ -26,9 +26,37 @@ def start_module():
         None
     """
 
-    # your code
+    module_name = "crm"
+    module_data_file = 'crm/customers.csv'
 
-    pass
+    common.start_module(module_name,module_data_file)
+    # table = data_manager.get_table_from_file(module_data_file)
+    # menu_title = common.modules_menu_title(module_name)
+    # options = common.modules_options(module_name)
+    # functions_dict = common.modules_functions_to_dict(module_name)
+    #
+    # while True:
+    #     ui.print_menu(menu_title, options, 'Back to main')
+    #     function_choice = ui.get_inputs(["Please enter a number: "], "")[0]
+    #     if function_choice in functions_dict:
+    #         if type(functions_dict[function_choice]) == list:
+    #             if len(functions_dict[function_choice]) == 2:
+    #                 special_function_result = eval(functions_dict[function_choice][0])
+    #                 ui.print_result(special_function_result, functions_dict[function_choice][1])
+    #             if len(functions_dict[function_choice]) == 3:
+    #                 question = ui.get_inputs(functions_dict[function_choice][1], "")[0]
+    #                 special_function_result = eval(functions_dict[function_choice][0])
+    #                 ui.print_result(special_function_result, functions_dict[function_choice][1])
+    #         elif type(functions_dict[function_choice]) == tuple:
+    #             id_ = ui.get_inputs(functions_dict[function_choice][1], "")[0]
+    #             exec(functions_dict[function_choice][0])
+    #         else:
+    #             exec(functions_dict[function_choice])
+    #     elif function_choice == "0":
+    #         data_manager.write_table_to_file(module_data_file, table)
+    #         return None
+    #     else:
+    #         ui.print_error_message("Choose correct number")
 
 
 def show_table(table):
@@ -42,9 +70,8 @@ def show_table(table):
         None
     """
 
-    # your code
-
-    pass
+    title_list = common.modules_table_first_row("crm")
+    ui.print_table(table, title_list)
 
 
 def add(table):
@@ -62,6 +89,12 @@ def add(table):
 
     return table
 
+
+def input_prep(table, function):
+    function_dict = {"remove": "remove(table, inputted)", "update": "update(table, inputted)"}
+    text_dict = {"remove": "Enter id to remove:", "update": "Enter id to remove:"  }
+    inputted =  ui.get_inputs([text_dict[function]], '')[0]
+    table = eval(function_dict[function])
 
 def remove(table, id_):
     """
@@ -99,21 +132,34 @@ def update(table, id_):
 
 # special functions:
 # ------------------
+def special_function(table, function_num):
 
+    function_dict = common.modules_special_functions("crm")
+    function_label = common.modules_special_functions_labels("crm")
+    special_function_result = eval(function_dict[function_num])
+    ui.print_result(special_function_result, function_label[function_num])
+
+# special functions:
 
 # the question: What is the id of the customer with the longest name ?
 # return type: string (id) - if there are more than one longest name, return the first by descending alphabetical order
 def get_longest_name_id(table):
+    result_list = []
+    for customer in table:
+        result_list.append([len(customer[1]),customer[0],customer[1]])
 
-    # your code
+    max_length = (max(result_list))[0]
 
-    pass
+    result = list(filter(lambda x: x[0] == max_length, result_list))
+    result = min(result, key = lambda x: x[2])
 
+    return result[1]
 
 # the question: Which customers has subscribed to the newsletter?
 # return type: list of strings (where string is like email+separator+name, separator=";")
 def get_subscribed_emails(table):
-
-    # your code
-
-    pass
+    subscribers_list = []
+    for customer in table:
+        if int(customer[-1]) == 1:
+            subscribers_list.append(customer[-2] + ";" + customer[1])
+    return subscribers_list
