@@ -109,7 +109,12 @@ def add(table):
                    'Year',
                    'Type',
                    'Amount']
-    table = common.add_to_table(table, list_labels)
+    type_list = ['month',
+                 'str',
+                 'int',
+                 'in',
+                 'int']
+    table = common.add_to_table(table, list_labels, type_list)
     return table
 
 
