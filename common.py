@@ -127,6 +127,7 @@ def validate(row, title_list, type_list):
                 day = from 1 to 31
                 month = from 1 to 12
                 year = 4-digit number start with 19 or 20.
+                bool = 1 for yes or 0 for no
 
         Returns:
             Validated row
@@ -167,6 +168,20 @@ def validate(row, title_list, type_list):
         elif type_list[i] == 'year':
             while switch:
                 if row[i].isdigit() and len(row[i]) == 4 and (row[i].startswith("20") or row[i].startswith("19")):
+                    switch = False
+                else:
+                    new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
+                    row[i] = new_answear[0]
+        elif type_list[i] == 'bool':
+            while switch:
+                if row[i] in ["0","1"]:
+                    switch = False
+                else:
+                    new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
+                    row[i] = new_answear[0]
+        elif type_list[i] == 'e-mail':
+            while switch:
+                if row[i].count("@") == 1 and "." in row[i][row[i].index("@")+2:]:  #a valid e-mail should have only one "@", at least one "." after "@" and at least 1 char beetwen @ and dot
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')

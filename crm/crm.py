@@ -91,9 +91,15 @@ def add(table):
         Table with a new record
     """
 
-    # your code
+    label_list = ["Name", "e-mail", "Newsletter subsciber? (0 for 'yes', 1 for 'no')"]
 
+    type_list = ['str',
+                 'e-mail',
+                 'bool']
+    table = common.add_to_table(table, label_list, type_list)
     return table
+
+
 
 
 
