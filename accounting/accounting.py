@@ -110,7 +110,7 @@ def add(table):
                    'Type',
                    'Amount']
     type_list = ['month',
-                 'str',
+                 'day',
                  'int',
                  'in',
                  'int']
