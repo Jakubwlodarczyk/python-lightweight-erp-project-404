@@ -149,8 +149,13 @@ def update(table, id_):
                    'Year',
                    'Type',
                    'Amount']
+    type_list = ['month',
+                 'str',
+                 'int',
+                 'in',
+                 'int']
     # your code
-    common.update_table(table, id_, list_labels)
+    common.update_table(table, id_, list_labels, type_list)
 
     return table
 

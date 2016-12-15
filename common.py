@@ -160,10 +160,11 @@ def add_to_table(table, title_list, type_list):
     return table
 
 
-def update_table(table, id_, title_list):
+def update_table(table, id_, title_list, type_list):
     for record in table:
         if record[0] == id_[0]:
             new_row = ui.get_inputs(title_list, 'New Value:')
+            new_row = validate(new_row, title_list, type_list)
             count = 1
             for data in new_row:
                 if data != '':
