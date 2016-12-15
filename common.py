@@ -113,6 +113,30 @@ def remove_record_from_table(table, id_):
 
 
 def validate(row, title_list, type_list):
+    '''
+        validate user input
+        Sample call:
+            validate(row_to_validate, title_list, type_list)
+        Sample display:
+            Wrong input
+            Year (user input)
+            Wrong input
+            Type (user input)
+
+        Args:
+            row : row to validate
+            title_list: List of names of varibals
+            type_list : list of types of varibals:
+                str = string
+                int = integer
+                in = in or out
+                day = from 1 to 31
+                month = fron 1 to 12
+
+        Returns:
+            Validated row
+    '''
+
     for i in range(len(row)):
         switch = True
         if row[i] == '':
@@ -152,6 +176,17 @@ def validate(row, title_list, type_list):
 
 
 def add_to_table(table, title_list, type_list):
+    """
+    Asks user for input and adds it into the table.
+
+    Args:
+        table: table to add new record to
+        title_list: list of varibal names to add 
+        type_list: list of varibal types to add
+
+    Returns:
+        Table with a new record
+    """
     new_row = ui.get_inputs(title_list, 'What you wanna to add?')
     new_row = validate(new_row, title_list, type_list)
     new_id = generate_random(table)
@@ -161,6 +196,18 @@ def add_to_table(table, title_list, type_list):
 
 
 def update_table(table, id_, title_list, type_list):
+    """
+    Updates specified record in the table. Ask users for new data.
+
+    Args:
+        table: list in which record should be updated
+        id_ (str): id of a record to update
+        title_list: list of varibal names to add 
+        type_list: list of varibal types to add
+
+    Returns:
+        table with updated record
+    """
     for record in table:
         if record[0] == id_[0]:
             new_row = ui.get_inputs(title_list, 'New Value:')
