@@ -190,6 +190,8 @@ def avg_amount(table, year):
                 profit += int(item[5])
             else:
                 profit -= int(item[5])
-
-    avg = profit / items
+    if items != 0:
+        avg = profit / items
+    else:
+        avg = 0
     return avg
