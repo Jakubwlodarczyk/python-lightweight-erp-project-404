@@ -53,17 +53,17 @@ def print_result(result, label):
         This function doesn't return anything it only prints to console.
     """
 
-    if type(result) in [str, int]: #result can be int too (needed to pass test), so this part works for 1-word result not depend on type
+    if type(result) in [str, int]:  # result can be int too (needed to pass test), so this part works for 1-word result not depend on type
         print("{}: {}".format(label, result))
     if type(result) == list:
         print(label + ":")
         for res in result:
-
             print(str(res) + "\n")
     if type(result) == dict:
-        print('{} {}'.format(label, 'Sum:'))
-        for item in result:
-            print('{} {}'.format(item, result[item]))
+        print(label)
+        print("-" * len(label))
+        for key, value in result.items():
+            print("{0:30} {1:30}".format(key, value))
 
 
 def print_menu(title, list_options, exit_message):

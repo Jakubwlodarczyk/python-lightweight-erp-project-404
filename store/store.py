@@ -57,7 +57,7 @@ def start_module():
                 ui.print_error_message(msg)
         elif option == "5":
             manufacture_dict = get_counts_by_manufacturers(table)
-            ui.print_result(manufacture_dict, 'Games by manufacture')
+            ui.print_result(manufacture_dict, 'Games by manufacture:')
         elif option == "6":
             inputs = ui.get_inputs(['Enter the manufacture'], '')
             manufacturer = inputs[0]
@@ -102,7 +102,12 @@ def add(table):
                   'Price',
                   'In_stock']
 
-    common.add_to_table(table, title_list)
+    type_list = ['str',
+                 'str',
+                 'int',
+                 'int']
+
+    common.add_to_table(table, title_list, type_list)
 
     return table
     pass
@@ -153,7 +158,16 @@ def update(table, id_):
 # the question: How many different kinds of game are available of each manufacturer?
 # return type: a dictionary with this structure: { [manufacturer] : [count] }
 def get_counts_by_manufacturers(table):
+    """
+    Counts games by manufacture, assign it to dictionary { [manufacturer] : [count] }
 
+    Args:
+        table: list in which we got manufacture of games
+
+    Return:
+        dictionary with name of manufacture and count
+
+    """
     manufacture_dict = {}
 
     for i in table:
@@ -169,6 +183,16 @@ def get_counts_by_manufacturers(table):
 # the question: What is the average amount of games in stock of a given manufacturer?
 # return type: number
 def get_average_by_manufacturer(table, manufacturer):
+    """
+    Function gets average amount of games in stock of given manufacture
+
+    Args:
+        table: list in which we have all manufacture and games in stock
+        manufacturer = input with name of manufacture
+
+    Return:
+        the average amount of games in stock counted by manufacture
+    """
 
     manufacturer_list = []
     for i in table:
