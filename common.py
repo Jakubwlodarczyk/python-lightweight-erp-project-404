@@ -215,5 +215,4 @@ def update_table(table, id_, title_list, type_list):
             new_row = validate(new_row, title_list, type_list)
             new_row.insert(0, table[record][0])
             table[record] = new_row
-            print(table[record])
     return table
