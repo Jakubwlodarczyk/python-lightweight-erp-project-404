@@ -29,34 +29,40 @@ def start_module():
     module_name = "crm"
     module_data_file = 'crm/customers.csv'
 
-    common.start_module(module_name,module_data_file)
-    # table = data_manager.get_table_from_file(module_data_file)
-    # menu_title = common.modules_menu_title(module_name)
-    # options = common.modules_options(module_name)
-    # functions_dict = common.modules_functions_to_dict(module_name)
-    #
-    # while True:
-    #     ui.print_menu(menu_title, options, 'Back to main')
-    #     function_choice = ui.get_inputs(["Please enter a number: "], "")[0]
-    #     if function_choice in functions_dict:
-    #         if type(functions_dict[function_choice]) == list:
-    #             if len(functions_dict[function_choice]) == 2:
-    #                 special_function_result = eval(functions_dict[function_choice][0])
-    #                 ui.print_result(special_function_result, functions_dict[function_choice][1])
-    #             if len(functions_dict[function_choice]) == 3:
-    #                 question = ui.get_inputs(functions_dict[function_choice][1], "")[0]
-    #                 special_function_result = eval(functions_dict[function_choice][0])
-    #                 ui.print_result(special_function_result, functions_dict[function_choice][1])
-    #         elif type(functions_dict[function_choice]) == tuple:
-    #             id_ = ui.get_inputs(functions_dict[function_choice][1], "")[0]
-    #             exec(functions_dict[function_choice][0])
-    #         else:
-    #             exec(functions_dict[function_choice])
-    #     elif function_choice == "0":
-    #         data_manager.write_table_to_file(module_data_file, table)
-    #         return None
-    #     else:
-    #         ui.print_error_message("Choose correct number")
+    table = data_manager.get_table_from_file(module_data_file)
+    options = ["Show customer table",
+               "Add to customer list",
+               "Remove from customer list",
+               "Update customer list",
+               "What is the id of the customer with the longest name?" ,
+               "Which customers has subscribed to the newsletter?"]
+
+
+
+    while True:
+        ui.print_menu("Inventory menu", options, 'Back to main')
+        option = ui.get_inputs(['Enter the number'], '')[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            table = add(table)
+        elif option == "3":
+            id_ = ui.get_inputs(["ID: "], "Please provide ID of record to remove")
+            if common.is_this_record_exist(table, id_):
+                table = remove(table, id_)
+        elif option == "4":
+            id_ = ui.get_inputs(["ID: "], "Please provide ID of record to update")
+            if common.is_this_record_exist(table, id_):
+                table = update(table, id_)
+        elif option == "5":
+            ui.print_result(get_longest_name_id(table), "Longest customer name ID")
+        elif option == "6":
+            ui.print_result(get_subscribed_emails(table), "Subscribers")
+        elif option == "0":
+            break
+        else:
+            ui.print_error_message("There is no such option.")
+
 
 
 def show_table(table):
@@ -70,7 +76,7 @@ def show_table(table):
         None
     """
 
-    title_list = common.modules_table_first_row("crm")
+    title_list = ["ID", "Name", "e-mail", "Newsletter subsciber?"]
     ui.print_table(table, title_list)
 
 
@@ -90,11 +96,7 @@ def add(table):
     return table
 
 
-def input_prep(table, function):
-    function_dict = {"remove": "remove(table, inputted)", "update": "update(table, inputted)"}
-    text_dict = {"remove": "Enter id to remove:", "update": "Enter id to remove:"  }
-    inputted =  ui.get_inputs([text_dict[function]], '')[0]
-    table = eval(function_dict[function])
+
 
 def remove(table, id_):
     """
@@ -130,14 +132,7 @@ def update(table, id_):
     return table
 
 
-# special functions:
-# ------------------
-def special_function(table, function_num):
 
-    function_dict = common.modules_special_functions("crm")
-    function_label = common.modules_special_functions_labels("crm")
-    special_function_result = eval(function_dict[function_num])
-    ui.print_result(special_function_result, function_label[function_num])
 
 # special functions:
 

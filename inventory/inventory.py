@@ -29,47 +29,39 @@ def start_module():
     """
     module_name = "inventory"
     module_data_file = 'inventory/inventory.csv'
-
-
     table = data_manager.get_table_from_file(module_data_file)
-    #menu_title = modules_menu_title(module_name)
-    #options = modules_options(module_name)
-    functions_dict = {"1": (show_table, "Show inventory table", "exec_only"),
-                      "2": (add, "Add to inventory"),
-                      "3": (remove, "Remove from inventory"),
-                      "4": (update, "Update inventory"),
-                      "5": (get_available_items, "Which items have not exceeded their durability yet?"),
-                      "6": (get_average_durability_by_manufacturers, "What are the average durability times for each manufacturer?")}
+    options = ["Show inventory table",
+               "Add to inventory",
+               "Remove from inventory",
+               "Update inventory",
+               "Which items have not exceeded their durability yet?",
+               "What are the average durability times for each manufacturer?"]
 
-    options = [""]*len(functions_dict)
-    for function in functions_dict:
-        options[int(function)-1] = functions_dict[function][1]
 
-    #while True:
-    ui.print_menu("Inventory menu", options, 'Back to main')
-    function_choice = ui.get_inputs(["Please enter a number: "], "")[0]
-    if function_choice in functions_dict:
-        if functions_dict[function_choice] == "1":
 
-            print("asdf")
-    #         if functions_dict[function_choice][-1] == "input_needed":
-    #             id_ = ui.get_inputs(functions_dict[function_choice][1], "")[0]
-    #             exec(functions_dict[function_choice][0])
-    #         if functions_dict[function_choice][-1] == "special":
-    #             special_function_result = eval(functions_dict[function_choice][0])
-    #             ui.print_result(special_function_result, functions_dict[function_choice][1])
-    #         if functions_dict[function_choice][-1] == "special_with_input":
-    #             question = ui.get_inputs(functions_dict[function_choice][1], "")[0]
-    #             special_function_result = eval(functions_dict[function_choice][0])
-    #             ui.print_result(special_function_result, functions_dict[function_choice][1])
-    #
-    #
-    #     elif function_choice == "0":
-    #         data_manager.get_table_from_file(module_data_file)
-    #         return None
-    #     else:
-    #         ui.print_error_message("Choose correct number")
-    #
+    while True:
+        ui.print_menu("Inventory menu", options, 'Back to main')
+        option = ui.get_inputs(['Enter the number'], '')[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            table = add(table)
+        elif option == "3":
+            id_ = ui.get_inputs(["ID: "], "Please provide ID of record to remove")
+            if common.is_this_record_exist(table, id_):
+                table = remove(table, id_)
+        elif option == "4":
+            id_ = ui.get_inputs(["ID: "], "Please provide ID of record to update")
+            if common.is_this_record_exist(table, id_):
+                table = update(table, id_)
+        elif option == "5":
+            ui.print_result(get_available_items(table), "Available items")
+        elif option == "6":
+            ui.print_result(get_average_durability_by_manufacturers(table), "Average durability by manufacturers")
+        elif option == "0":
+            break
+        else:
+            ui.print_error_message("There is no such option.")
 
 
 def show_table(table):
@@ -82,7 +74,7 @@ def show_table(table):
     Returns:
         None
     """
-    title_list = common.modules_table_first_row("inventory")
+    title_list = ["ID", "Name", "Manufacturer", "Purchase date", "Durability"]
     ui.print_table(table, title_list)
 
 
@@ -96,8 +88,8 @@ def add(table):
     Returns:
         Table with a new record
     """
-    title_list = common.modules_table_first_row("inventory")
-    table = common.add_to_table(table, title_list[1:])
+    title_list = ["Name", "Manufacturer", "Purchase date", "Durability"]
+    table = common.add_to_table(table, title_list)
     return table
 
 
@@ -128,7 +120,7 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-    title_list = common.modules_table_first_row("inventory")
+    title_list = ["Name", "Manufacturer", "Purchase date", "Durability"]
     common.update_table(table, id_, title_list)
     return table
 
