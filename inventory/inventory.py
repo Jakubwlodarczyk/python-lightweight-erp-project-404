@@ -29,11 +29,39 @@ def start_module():
     """
     module_name = "inventory"
     module_data_file = 'inventory/inventory.csv'
+    table = data_manager.get_table_from_file(module_data_file)
+    options = ["Show inventory table",
+               "Add to inventory",
+               "Remove from inventory",
+               "Update inventory",
+               "Which items have not exceeded their durability yet?",
+               "What are the average durability times for each manufacturer?"]
 
-    common.start_module(module_name,module_data_file)
 
 
-
+    while True:
+        ui.print_menu("Inventory menu", options, 'Back to main')
+        option = ui.get_inputs(['Enter the number'], '')[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            table = add(table)
+        elif option == "3":
+            id_ = ui.get_inputs(["ID: "], "Please provide ID of record to remove")
+            if common.is_this_record_exist(table, id_):
+                table = remove(table, id_)
+        elif option == "4":
+            id_ = ui.get_inputs(["ID: "], "Please provide ID of record to update")
+            if common.is_this_record_exist(table, id_):
+                table = update(table, id_)
+        elif option == "5":
+            ui.print_result(get_available_items(table), "Available items")
+        elif option == "6":
+            ui.print_result(get_average_durability_by_manufacturers(table), "Average durability by manufacturers")
+        elif option == "0":
+            break
+        else:
+            ui.print_error_message("There is no such option.")
 
 
 def show_table(table):
@@ -46,7 +74,7 @@ def show_table(table):
     Returns:
         None
     """
-    title_list = common.modules_table_first_row("inventory")
+    title_list = ["ID", "Name", "Manufacturer", "Purchase date", "Durability"]
     ui.print_table(table, title_list)
 
 
@@ -60,8 +88,8 @@ def add(table):
     Returns:
         Table with a new record
     """
-    title_list = common.modules_table_first_row("inventory")
-    table = common.add_to_table(table, title_list[1:])
+    title_list = ["Name", "Manufacturer", "Purchase date", "Durability"]
+    table = common.add_to_table(table, title_list)
     return table
 
 
@@ -92,15 +120,9 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-    title_list = common.modules_table_first_row("inventory")
+    title_list = ["Name", "Manufacturer", "Purchase date", "Durability"]
     common.update_table(table, id_, title_list)
     return table
-
-def special_function(table, function_num):
-
-    function_dict = common.modules_special_functions("inventory")
-    function_label = common.modules_special_functions_labels("inventory")
-
 
 
 # special functions:
