@@ -47,15 +47,14 @@ def generate_random(table):
 def sum_numbers(numbers_list):
     output = 0
     for number in numbers_list:
-        output += number
+        output += int(number)
     return output
 
 
 def mean_from_list(num_list):
-    num_sum = 0
-    for num in num_list:  # making sum of number in list
-        num_sum += int(num)
-    mean = num_sum / len(num_list)  # dividing by
+
+    num_sum = sum_numbers(num_list)
+    mean = num_sum / len(num_list)
     return mean
 
 
@@ -126,7 +125,8 @@ def validate(row, title_list, type_list):
                 int = integer
                 in = in or out
                 day = from 1 to 31
-                month = fron 1 to 12
+                month = from 1 to 12
+                year = 4-digit number start with 19 or 20.
 
         Returns:
             Validated row
@@ -164,6 +164,13 @@ def validate(row, title_list, type_list):
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
+        elif type_list[i] == 'year':
+            while switch:
+                if row[i].isdigit() and len(row[i]) == 4 and (row[i].startswith("20") or row[i].startswith("19")):
+                    switch = False
+                else:
+                    new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
+                    row[i] = new_answear[0]
 
     return row
 
@@ -174,7 +181,7 @@ def add_to_table(table, title_list, type_list):
 
     Args:
         table: table to add new record to
-        title_list: list of varibal names to add 
+        title_list: list of varibal names to add
         type_list: list of varibal types to add
 
     Returns:
@@ -195,7 +202,7 @@ def update_table(table, id_, title_list, type_list):
     Args:
         table: list in which record should be updated
         id_ (str): id of a record to update
-        title_list: list of varibal names to add 
+        title_list: list of varibal names to add
         type_list: list of varibal types to add
 
     Returns:

@@ -88,8 +88,13 @@ def add(table):
     Returns:
         Table with a new record
     """
-    title_list = ["Name", "Manufacturer", "Purchase date", "Durability"]
-    table = common.add_to_table(table, title_list)
+    label_list = ["Name", "Manufacturer", "Purchase date", "Durability"]
+
+    type_list = ['str',
+                 'str',
+                 'year',
+                 'int']
+    table = common.add_to_table(table, label_list, type_list)
     return table
 
 
