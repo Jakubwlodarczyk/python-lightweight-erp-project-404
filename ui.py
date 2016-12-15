@@ -60,10 +60,12 @@ def print_result(result, label):
         for res in result:
             print(str(res) + "\n")
     if type(result) == dict:
-        print(label)
-        print("-" * len(label))
+        print('\n\033[1m' + label + '\033[0m')
         for key, value in result.items():
-            print("{0:30} {1:30}".format(key, value))
+            print('-' * 41)
+            value = str(value)
+            print('{} {}'.format(key.ljust(0), value.rjust(40 - len(key))))
+        print('-' * 41, '\n')
 
 
 def print_menu(title, list_options, exit_message):
