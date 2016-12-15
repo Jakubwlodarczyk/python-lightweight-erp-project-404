@@ -60,7 +60,7 @@ def start_module():
             ui.print_result(manufacture_dict, 'Games by manufacture:')
         elif option == "6":
             inputs = ui.get_inputs(['Enter the manufacture'], '')
-            manufacturer = inputs[0]
+            manufacturer = inputs[0].lower()
             average = get_average_by_manufacturer(table, manufacturer)
             ui.print_result(str(average), 'Average: ')
         elif option == "0":
@@ -197,11 +197,12 @@ def get_average_by_manufacturer(table, manufacturer):
     manufacturer_list = []
     for i in table:
         if i[2] not in manufacturer_list:
-            manufacturer_list.append(i[2])
+            manufacturer_list.append(i[2].lower())
     if manufacturer not in manufacturer_list:
         ui.print_error_message('Manufacture is not in list')
     else:
-        list_of_stock_items = [int(record[4]) for record in table if record[2] == manufacturer]
+        # create a list of in_stock value, finded in table, by manufacture
+        list_of_stock_items = [int(record[4]) for record in table if record[2].lower() == manufacturer]
         sum_items = 0
         for i in list_of_stock_items:
             sum_items += i
