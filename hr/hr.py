@@ -83,7 +83,7 @@ def add(table):
     Returns:
         Table with a new record
     """
-    table = common.add_to_table(table, ["Name and surname: ", "Birth date: "])
+    table = common.add_to_table(table, ["Name and surname: ", "Birth date: "], ['str', 'int'])
     return table
 
 
@@ -113,7 +113,7 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-    table = common.update_table(table, id_, ["Name and surname: ", "Birth date: "])
+    table = common.update_table(table, id_, ["Name and surname: ", "Birth date: "], ['str', 'int'])
     return table
 
 # special functions:
