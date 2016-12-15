@@ -23,6 +23,10 @@ def print_table(table, title_list):
     END = '\033[0m'
     print("\n" * 100)
     work_table = table[:]
+    for row_index, row in enumerate(work_table):
+        for col_index, col in enumerate(row):
+            if type(col) == int:
+                work_table[row_index][col_index] = str(col)
     work_table.insert(0, title_list)
     widths = [max(map(len, col)) for col in zip(*work_table)]
     sum_of_widths = common.sum_numbers(widths) + len(work_table[0]) * 2 + len(work_table[0]) - 1

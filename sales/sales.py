@@ -38,8 +38,7 @@ def start_module():
 
     while True:
         ui.print_menu('Sales menu', options, 'Back to main menu')
-        inputs = ui.get_inputs(["Please enter a number: "], "")
-        option = inputs[0]
+        option = ui.get_inputs(["Please enter a number: "], "")[0]
         if option == "1":
             show_table(table)
         elif option == "2":
@@ -51,7 +50,7 @@ def start_module():
             id_ = get_id(table)
             update(table, id_)
         elif option == "5":
-            get_lowest_price_item_id(table)
+            ui.print_result(get_lowest_price_item_id(table), 'Item ID with lowest price')
         elif option == "6":
             inputs = get_dates()
             year_from = inputs[0]
@@ -60,7 +59,8 @@ def start_module():
             year_to = inputs[3]
             month_to = inputs[4]
             day_to = inputs[5]
-            get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
+            get_items_sold_between(table, month_from, day_from, year_from,
+                        month_to, day_to, year_to)
         elif option == "0":
             data_manager.write_table_to_file('sales/sales.csv', table)
             break
