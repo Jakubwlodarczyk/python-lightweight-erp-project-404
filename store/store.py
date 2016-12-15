@@ -179,10 +179,14 @@ def get_counts_by_manufacturers(table):
 # return type: number
 def get_average_by_manufacturer(table, manufacturer):
     """
-    Function gets average amount of games in stock of given manufacture 
+    Function gets average amount of games in stock of given manufacture
 
     Args:
-        table: list in which we have all manufacture 
+        table: list in which we have all manufacture and games in stock
+        manufacturer = input with name of manufacture 
+
+    Return:
+        the average amount of games in stock counted by manufacture
     """
 
     manufacturer_list = []
