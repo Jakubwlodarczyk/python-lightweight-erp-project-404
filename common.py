@@ -152,17 +152,15 @@ def validate(row, title_list, type_list):
                     row[i] = new_answear[0]
         elif type_list[i] == 'day':
             while switch:
-                if row[i].isdigit():
-                    if 0 < int(row[i]) < 32:
-                        switch = False
+                if row[i].isdigit() and 0 < int(row[i]) < 32:
+                    switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
         elif type_list[i] == 'month':
             while switch:
-                if row[i].isdigit():
-                    if 0 < int(row[i]) < 13:
-                        switch = False
+                if row[i].isdigit() and 0 < int(row[i]) < 13:
+                    switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
