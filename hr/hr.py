@@ -36,8 +36,7 @@ def start_module():
     while True:
         ui.print_menu('HR menu', options, 'Back to main menu')
 
-        inputs = ui.get_inputs(['Enter the number'], '')
-        option = inputs[0]
+        option = ui.get_inputs(['Enter the number'], '')[0]
         if option == "1":
             show_table(table)
         elif option == "2":
@@ -84,7 +83,7 @@ def add(table):
     Returns:
         Table with a new record
     """
-    table = common.add_to_table(table, ["Name and surname: ", "Birth date: "])
+    table = common.add_to_table(table, ["Name and surname: ", "Birth date: "], ['str', 'int'])
     return table
 
 
@@ -114,7 +113,7 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-    table = common.update_table(table, id_, ["Name and surname: ", "Birth date: "])
+    table = common.update_table(table, id_, ["Name and surname: ", "Birth date: "], ['str', 'int'])
     return table
 
 # special functions:
@@ -125,7 +124,12 @@ def update(table, id_):
 
 
 def get_oldest_person(table):
-    """ Searching for oldest persons in table, return string of names """
+    """
+    Searching for oldest persons in table
+
+    Return:
+        list of oldest persons names
+    """
     oldest_year = min([int(year[2]) for year in table])  # search for oldest year
     oldest_person = []
     i = 0
@@ -140,15 +144,21 @@ def get_oldest_person(table):
 
 
 def get_persons_closest_to_average(table):
-    """ Searching for closest persons to average year in table, return string of names """
-    average = common.mean_from_list([int(data[2]) for data in table])
+    """
+    Searching for closest persons to average year in table
 
-    list_of_abs = [abs(int(person[2])-average) for person in table]  # make list of substract years with same index
-    min_from_abs = min(list_of_abs)
+    Return:
+        list of persons names closest to average year
+    """
+    average = common.mean_from_list([int(data[2]) for data in table])  # using common function to count average
+
+    # list_of_abs - list of substract years with same index as records in table
+    list_of_abs = [abs(int(person[2])-average) for person in table]
+    min_from_abs = min(list_of_abs)  # closest year
     closest_person = []
 
     i = 0
-    while i < len(table):
+    while i < len(list_of_abs):
         if list_of_abs[i] == min_from_abs:
             closest_person.append(table[i][1])
         i += 1

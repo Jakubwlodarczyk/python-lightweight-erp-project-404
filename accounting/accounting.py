@@ -72,7 +72,7 @@ def start_module():
             menu = choose(table)
         except KeyError as err:
             ui.print_error_message(err)
-    data_manager.write_table_to_file('accounting/items_test.csv', table)
+    data_manager.write_table_to_file('accounting/items_my_test.csv', table)
     pass
 
 
@@ -109,7 +109,12 @@ def add(table):
                    'Year',
                    'Type',
                    'Amount']
-    table = common.add_to_table(table, list_labels)
+    type_list = ['month',
+                 'str',
+                 'int',
+                 'in',
+                 'int']
+    table = common.add_to_table(table, list_labels, type_list)
     return table
 
 
@@ -144,8 +149,13 @@ def update(table, id_):
                    'Year',
                    'Type',
                    'Amount']
+    type_list = ['month',
+                 'str',
+                 'int',
+                 'in',
+                 'int']
     # your code
-    common.update_table(table, id_, list_labels)
+    common.update_table(table, id_, list_labels, type_list)
 
     return table
 
@@ -182,7 +192,6 @@ def which_year_max(table):
 def avg_amount(table, year):
     items = 0
     profit = 0
-    title_list = ['id', 'month', 'day', 'year', 'type', 'amount']
     # your code
     for item in table:
         if int(item[3]) == int(year):
@@ -191,6 +200,8 @@ def avg_amount(table, year):
                 profit += int(item[5])
             else:
                 profit -= int(item[5])
-
-    avg = profit / items
+    if items != 0:
+        avg = profit / items
+    else:
+        avg = 0
     return avg
