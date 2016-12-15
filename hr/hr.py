@@ -37,7 +37,6 @@ def start_module():
         ui.print_menu('HR menu', options, 'Back to main menu')
 
         option = ui.get_inputs(['Enter the number'], '')[0]
-        #option = inputs[0]
         if option == "1":
             show_table(table)
         elif option == "2":
