@@ -32,14 +32,17 @@ def choose(table):
     elif option == "4":
         id_to_update = ui.get_inputs(['Enter id to update'], '')
         if common.is_this_record_exist(table, id_to_update):
-            update(table, id_to_update)
+            table = update(table, id_to_update)
     elif option == "5":
         year = which_year_max(table)
         ui.print_result(str(year), 'Best profit year')
     elif option == "6":
         year = ui.get_inputs(['which year?'], '')
-        answear = avg_amount(table, year[0])
-        ui.print_result(str(answear), 'Averge profit')
+        if year[0].isdigit():
+            answear = avg_amount(table, year[0])
+            ui.print_result(str(answear), 'Averge profit')
+        else:
+            ui.print_error_message('Wrong year')
     elif option == "0":
         return False
     else:

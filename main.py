@@ -20,6 +20,7 @@ from crm import crm
 
 
 def choose():
+    ''' Chech what option was chosen by user '''
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
