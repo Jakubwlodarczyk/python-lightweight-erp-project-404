@@ -167,7 +167,7 @@ def validate(row, title_list, type_list):
                     row[i] = new_answear[0]
         elif type_list[i] == 'year':
             while switch:
-                if row[i].isdigit() and len(row[i]) == 4 and (row[i].startswith("20") or row[i].startswith("19")):
+                if row[i].isdigit() and len(row[i]) == 4 and row[i][:2] in ["19","20"]:
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
@@ -181,7 +181,7 @@ def validate(row, title_list, type_list):
                     row[i] = new_answear[0]
         elif type_list[i] == 'e-mail':
             while switch:
-                if row[i].count("@") == 1 and "." in row[i][row[i].index("@")+2:]:  #a valid e-mail should have only one "@", at least one "." after "@" and at least 1 char beetwen @ and dot
+                if len(list(filter(lambda x: x == "@", list(row[i])))) == 1 and "." in row[i].split("@")[1][1:] and row[i][-1].isalpha() and " " not in row[i]:  #a valid e-mail should have only one "@", at least one "." after "@" and at least 1 char beetwen @ and dot
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')

@@ -37,8 +37,6 @@ def start_module():
                "What is the id of the customer with the longest name?" ,
                "Which customers has subscribed to the newsletter?"]
 
-
-
     while True:
         ui.print_menu("Inventory menu", options, 'Back to main')
         option = ui.get_inputs(['Enter the number'], '')[0]
@@ -64,6 +62,16 @@ def start_module():
             ui.print_error_message("There is no such option.")
 
 
+def labels_list(label_type):
+    """Function stores and return """
+    if label_type == "show":
+        labels_list = ["ID", "Name", "e-mail", "Newsletter subsciber?"]
+    if label_type == "modify":
+        labels_list = ["Name", "e-mail", "Newsletter subsciber? (0 for 'yes', 1 for 'no')"]
+    if label_type == "validate":
+        labels_list = ['str', 'e-mail', 'bool']
+    return labels_list
+
 
 def show_table(table):
     """
@@ -76,7 +84,7 @@ def show_table(table):
         None
     """
 
-    title_list = ["ID", "Name", "e-mail", "Newsletter subsciber?"]
+    title_list = labels_list("show")
     ui.print_table(table, title_list)
 
 
@@ -91,17 +99,10 @@ def add(table):
         Table with a new record
     """
 
-    label_list = ["Name", "e-mail", "Newsletter subsciber? (0 for 'yes', 1 for 'no')"]
-
-    type_list = ['str',
-                 'e-mail',
-                 'bool']
+    label_list = labels_list("modify")
+    type_list = labels_list("validate")
     table = common.add_to_table(table, label_list, type_list)
     return table
-
-
-
-
 
 
 def remove(table, id_):
@@ -116,8 +117,7 @@ def remove(table, id_):
         Table without specified record.
     """
 
-    # your code
-
+    common.remove_record_from_table(table, id_)
     return table
 
 
@@ -133,11 +133,10 @@ def update(table, id_):
         table with updated record
     """
 
-    # your code
-
+    label_list = labels_list("modify")
+    type_list = labels_list("validate")
+    table = common.update_table(table, label_list, type_list)
     return table
-
-
 
 
 # special functions:
@@ -155,6 +154,7 @@ def get_longest_name_id(table):
     result = min(result, key = lambda x: x[2])
 
     return result[1]
+
 
 # the question: Which customers has subscribed to the newsletter?
 # return type: list of strings (where string is like email+separator+name, separator=";")
