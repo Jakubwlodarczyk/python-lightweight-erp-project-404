@@ -134,7 +134,6 @@ def validate(row, title_list, type_list):
                 in = in or out
                 day = from 1 to 31
                 month = from 1 to 12
-                year = 4-digit number start with 19 or 20.
                 bool = 1 for yes or 0 for no
 
         Returns:
@@ -177,21 +176,23 @@ def validate(row, title_list, type_list):
                     row[i] = new_answear[0]
         elif type_list[i] == 'year':
             while switch:
-                if row[i].isdigit() and len(row[i]) == 4 and row[i][:2] in ["19","20"]:
+                if row[i].isdigit() and len(row[i]) == 4 and row[i][:2] in ["19", "20"]:
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
         elif type_list[i] == 'bool':
             while switch:
-                if row[i] in ["0","1"]:
+                if row[i] in ["0", "1"]:
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
         elif type_list[i] == 'e-mail':
             while switch:
-                if len(list(filter(lambda x: x == "@", list(row[i])))) == 1 and "." in row[i].split("@")[1][1:] and row[i][-1].isalpha() and " " not in row[i]:  #a valid e-mail should have only one "@", at least one "." after "@" and at least 1 char beetwen @ and dot
+                # a valid e-mail should have only one "@", at least one "." after "@" and
+                # at least 1 char beetwen @ and dot
+                if len(list(filter(lambda x: x == "@", list(row[i])))) == 1 and "." in row[i].split("@")[1][1:] and row[i][-1].isalpha() and " " not in row[i]:
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
