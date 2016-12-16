@@ -208,5 +208,4 @@ def get_average_by_manufacturer(table, manufacturer):
             sum_items += i
         average = sum_items / len(list_of_stock_items)
         return average
-
     pass
