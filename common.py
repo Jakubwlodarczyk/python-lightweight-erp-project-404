@@ -45,6 +45,7 @@ def generate_random(table):
 
 
 def sum_numbers(numbers_list):
+    """Counts numbers in list sum"""
     output = 0
     for number in numbers_list:
         output += int(number)
@@ -52,7 +53,7 @@ def sum_numbers(numbers_list):
 
 
 def mean_from_list(num_list):
-
+    """Counts mean from number list"""
     num_sum = sum_numbers(num_list)
     mean = num_sum / len(num_list)
     return mean
@@ -126,8 +127,8 @@ def validate(row, title_list, type_list):
                 in = in or out
                 day = from 1 to 31
                 month = from 1 to 12
-                year = 4-digit number start with 19 or 20.
                 bool = 1 for yes or 0 for no
+                e-mail = only one "@", at least one "." after "@", at least one char between "@" and ".", no "." at end
 
         Returns:
             Validated row
@@ -165,13 +166,6 @@ def validate(row, title_list, type_list):
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
-        elif type_list[i] == 'year':
-            while switch:
-                if row[i].isdigit() and len(row[i]) == 4 and row[i][:2] in ["19","20"]:
-                    switch = False
-                else:
-                    new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
-                    row[i] = new_answear[0]
         elif type_list[i] == 'bool':
             while switch:
                 if row[i] in ["0","1"]:
@@ -181,7 +175,7 @@ def validate(row, title_list, type_list):
                     row[i] = new_answear[0]
         elif type_list[i] == 'e-mail':
             while switch:
-                if len(list(filter(lambda x: x == "@", list(row[i])))) == 1 and "." in row[i].split("@")[1][1:] and row[i][-1].isalpha() and " " not in row[i]:  #a valid e-mail should have only one "@", at least one "." after "@" and at least 1 char beetwen @ and dot
+                if is_only_one_at_in_email(row[i]) and is_correct_dot_in_email(row[i]) :#and is_no_specials_in_email(row[i]):
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
@@ -189,6 +183,25 @@ def validate(row, title_list, type_list):
 
     return row
 
+def is_only_one_at_in_email(email):
+    """Function checks if is @ in email and there is only one @. count () was restricted, so filter is used"""
+    return len(list(filter(lambda x: x == "@", list(email)))) == 1
+
+
+def is_correct_dot_in_email(email):
+    """Function checks if is at least one dot after @ and if is at least one char between @ and no dot at end"""
+    return "." in email.split("@")[1][1:] and email[-1].isalpha()
+
+
+def is_no_specials_in_email(email):
+    """Function checks for forbidden special characters in email address
+       return True if no specials in"""
+    special = "(),:;<>[\\]"
+    for char in special:
+        if char in email:
+            return False
+    else:
+        return True
 
 def add_to_table(table, title_list, type_list):
     """
@@ -223,7 +236,7 @@ def update_table(table, id_, title_list, type_list):
     Returns:
         table with updated record
     """
-    record = 0
+    record = 0 #that is the beginning of a linked list. This list always contains a tail and a loop.
     for record in range(len(table)):
         if table[record][0] == id_[0]:
             new_row = ui.get_inputs(title_list, 'New Value:')

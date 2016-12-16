@@ -63,7 +63,9 @@ def start_module():
 
 
 def labels_list(label_type):
-    """Function stores and return """
+    """Function stores and returns list with labels, that needed to use in show_table, add and update functions.
+       Parameter label_type decides which label list should be return.
+       This function allows to store all text in one place"""
     if label_type == "show":
         labels_list = ["ID", "Name", "e-mail", "Newsletter subsciber?"]
     if label_type == "modify":
@@ -144,6 +146,13 @@ def update(table, id_):
 # the question: What is the id of the customer with the longest name ?
 # return type: string (id) - if there are more than one longest name, return the first by descending alphabetical order
 def get_longest_name_id(table):
+    """Function return ID of customer with the longest name.
+       If there are than one longest name, return the first by descending alphabetical order.
+       In first step is created list (result_list) that stores sublist with customer name length (len(customer[1])),
+       customer ID, customer name.
+       In second step result_list is filtered for max length.
+       In next step is searching the"""
+
     result_list = []
     for customer in table:
         result_list.append([len(customer[1]),customer[0],customer[1]])
@@ -159,6 +168,7 @@ def get_longest_name_id(table):
 # the question: Which customers has subscribed to the newsletter?
 # return type: list of strings (where string is like email+separator+name, separator=";")
 def get_subscribed_emails(table):
+    "Returns list with than one longest name, return the first by descending alphabetical order"
     subscribers_list = []
     for customer in table:
         if int(customer[-1]) == 1:

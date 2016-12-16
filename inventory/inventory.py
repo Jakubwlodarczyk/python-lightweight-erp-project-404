@@ -63,13 +63,15 @@ def start_module():
 
 
 def labels_list(label_type):
-    """Function stores and return """
+    """Function stores and returns list with labels, that needed to use in show_table, add and update functions.
+       Parameter label_type decides which label list should be return.
+       This function allows to store all text in one place"""
     if label_type == "show":
         labels_list = ["ID", "Name", "Manufacturer", "Purchase date", "Durability"]
     if label_type == "modify":
         labels_list = ["Name", "Manufacturer", "Purchase date (year only)", "Durability (in years)"]
     if label_type == "validate":
-        labels_list = ['str', 'str', 'year', 'int']
+        labels_list = ['str', 'str', 'int', 'int']
     return labels_list
 
 
@@ -144,6 +146,8 @@ def update(table, id_):
 #
 # @table: list of lists
 def get_available_items(table):
+    """Function returns items, that have not exceeded their durability
+       Durability is exceeded when purchase date plus durability is less than current year"""
     import datetime
     for i in range(len(table)):
         table[i][-1] = int(table[i][-1])
@@ -157,6 +161,7 @@ def get_available_items(table):
 # @table: list of lists
 
 def get_average_durability_by_manufacturers(table):
+    """Function counts average durability by manufaturers and returns it in dictionary """
     aver_durability_dict = {}
     for item in table:
         if item[-3] in aver_durability_dict:
