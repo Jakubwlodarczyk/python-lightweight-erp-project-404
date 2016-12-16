@@ -26,7 +26,6 @@ def generate_random(table):
     digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
                 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-
     generated = ''
     is_unique = False
     id_table = []
@@ -45,7 +44,19 @@ def generate_random(table):
 
 
 def sum_numbers(numbers_list):
+
     """Counts numbers in list sum"""
+
+    """
+    Sums numbers
+
+    Args:
+        numbers_list: list of numbers to sum
+
+    Returns:
+        Sum of numbers
+    """
+
     output = 0
     for number in numbers_list:
         output += int(number)
@@ -136,46 +147,49 @@ def validate(row, title_list, type_list):
 
     for i in range(len(row)):
         switch = True
-        if type_list[i] == 'str':
+        if row[i] == '':
+            pass
+        elif type_list[i] == 'str':
             pass
         elif type_list[i] == 'int':
             while switch:
-                if row[i].isdigit():
+                if row[i].isdigit() or row[i] == '':
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
         elif type_list[i] == 'in':
             while switch:
-                if row[i] == 'in' or row[i] == 'out':
+                if row[i] == 'in' or row[i] == 'out' or row[i] == '':
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
         elif type_list[i] == 'day':
             while switch:
-                if row[i].isdigit() and 0 < int(row[i]) < 32:
+                if row[i].isdigit() and 0 < int(row[i]) < 32 or row[i] == '':
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
         elif type_list[i] == 'month':
             while switch:
-                if row[i].isdigit() and 0 < int(row[i]) < 13:
+                if row[i].isdigit() and 0 < int(row[i]) < 13 or row[i] == '':
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
+
         elif type_list[i] == 'bool':
             while switch:
-                if row[i] in ["0","1"]:
+                if row[i] in ["0", "1"]:
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
         elif type_list[i] == 'e-mail':
             while switch:
-                if is_only_one_at_in_email(row[i]) and is_correct_dot_in_email(row[i]) :#and is_no_specials_in_email(row[i]):
+                if is_only_one_at_in_email(row[i]) and is_correct_dot_in_email(row[i]) and is_no_specials_in_email(row[i]):
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
