@@ -60,7 +60,7 @@ def start_module():
             ui.print_result(manufacture_dict, 'Games by manufacture:')
         elif option == "6":
             inputs = ui.get_inputs(['Enter the manufacture'], '')
-            manufacturer = inputs[0].lower()
+            manufacturer = inputs[0]
             average = get_average_by_manufacturer(table, manufacturer)
             ui.print_result(str(average), 'Average: ')
         elif option == "0":
