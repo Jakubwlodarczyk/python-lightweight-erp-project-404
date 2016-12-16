@@ -26,7 +26,6 @@ def generate_random(table):
     digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
                 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-
     generated = ''
     is_unique = False
     id_table = []
@@ -45,6 +44,15 @@ def generate_random(table):
 
 
 def sum_numbers(numbers_list):
+    """
+    Sums numbers
+
+    Args:
+        numbers_list: list of numbers to sum
+
+    Returns:
+        Sum of numbers
+    """
     output = 0
     for number in numbers_list:
         output += int(number)
@@ -127,6 +135,7 @@ def validate(row, title_list, type_list):
                 day = from 1 to 31
                 month = from 1 to 12
                 year = 4-digit number start with 19 or 20.
+                bool = 1 for yes or 0 for no
 
         Returns:
             Validated row
@@ -166,7 +175,21 @@ def validate(row, title_list, type_list):
                     row[i] = new_answear[0]
         elif type_list[i] == 'year':
             while switch:
-                if row[i].isdigit() and len(row[i]) == 4 and (row[i].startswith("20") or row[i].startswith("19")):
+                if row[i].isdigit() and len(row[i]) == 4 and row[i][:2] in ["19","20"]:
+                    switch = False
+                else:
+                    new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
+                    row[i] = new_answear[0]
+        elif type_list[i] == 'bool':
+            while switch:
+                if row[i] in ["0","1"]:
+                    switch = False
+                else:
+                    new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
+                    row[i] = new_answear[0]
+        elif type_list[i] == 'e-mail':
+            while switch:
+                if len(list(filter(lambda x: x == "@", list(row[i])))) == 1 and "." in row[i].split("@")[1][1:] and row[i][-1].isalpha() and " " not in row[i]:  #a valid e-mail should have only one "@", at least one "." after "@" and at least 1 char beetwen @ and dot
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
