@@ -37,8 +37,6 @@ def start_module():
                "Which items have not exceeded their durability yet?",
                "What are the average durability times for each manufacturer?"]
 
-
-
     while True:
         ui.print_menu("Inventory menu", options, 'Back to main')
         option = ui.get_inputs(['Enter the number'], '')[0]
@@ -64,6 +62,17 @@ def start_module():
             ui.print_error_message("There is no such option.")
 
 
+def labels_list(label_type):
+    """Function stores and return """
+    if label_type == "show":
+        labels_list = ["ID", "Name", "Manufacturer", "Purchase date", "Durability"]
+    if label_type == "modify":
+        labels_list = ["Name", "Manufacturer", "Purchase date (year only)", "Durability (in years)"]
+    if label_type == "validate":
+        labels_list = ['str', 'str', 'year', 'int']
+    return labels_list
+
+
 def show_table(table):
     """
     Display a table
@@ -74,7 +83,7 @@ def show_table(table):
     Returns:
         None
     """
-    title_list = ["ID", "Name", "Manufacturer", "Purchase date", "Durability"]
+    title_list = labels_list("show")
     ui.print_table(table, title_list)
 
 
@@ -88,8 +97,9 @@ def add(table):
     Returns:
         Table with a new record
     """
-    title_list = ["Name", "Manufacturer", "Purchase date", "Durability"]
-    table = common.add_to_table(table, title_list)
+    label_list = labels_list("modify")
+    type_list = labels_list("validate")
+    table = common.add_to_table(table, label_list, type_list)
     return table
 
 
@@ -120,8 +130,9 @@ def update(table, id_):
     Returns:
         table with updated record
     """
-    title_list = ["Name", "Manufacturer", "Purchase date", "Durability"]
-    common.update_table(table, id_, title_list)
+    label_list = labels_list("modify")
+    type_list = labels_list("validate")
+    table = common.update_table(table, label_list, type_list)
     return table
 
 
