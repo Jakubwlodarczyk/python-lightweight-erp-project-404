@@ -169,6 +169,17 @@ def update(table, id_):
 # the question: Which year has the highest profit? (profit=in-out)
 # return the answer (number)
 def which_year_max(table):
+    '''
+    Chech which year have highest profit
+    Sample call:
+        which_year_max(table_with_data)
+
+    Args:
+        table = table with data to check
+
+    Return:
+        Highest profit year as int
+    '''
     profit_dict = {}
     profit = 0
     year = 0
@@ -193,6 +204,18 @@ def which_year_max(table):
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
 # return the answer (number)
 def avg_amount(table, year):
+    '''
+    Count averge profit for passed year
+    Sample call:
+        avg_amount(table_with_data, year_to_check)
+
+    Args:
+        table = data file saved to table
+        year = year to check
+
+    Returns:
+        return avg profit for passed year as float
+    '''
     items = 0
     profit = 0
     # your code

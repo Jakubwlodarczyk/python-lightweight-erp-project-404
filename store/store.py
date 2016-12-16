@@ -193,7 +193,7 @@ def get_average_by_manufacturer(table, manufacturer):
     Return:
         the average amount of games in stock counted by manufacture
     """
-
+    manufacturer = manufacturer.lower()
     manufacturer_list = []
     for i in table:
         if i[2] not in manufacturer_list:
@@ -208,5 +208,4 @@ def get_average_by_manufacturer(table, manufacturer):
             sum_items += i
         average = sum_items / len(list_of_stock_items)
         return average
-
     pass
