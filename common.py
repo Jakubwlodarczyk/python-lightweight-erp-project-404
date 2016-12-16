@@ -134,32 +134,34 @@ def validate(row, title_list, type_list):
 
     for i in range(len(row)):
         switch = True
-        if type_list[i] == 'str':
+        if row[i] == '':
+            pass
+        elif type_list[i] == 'str':
             pass
         elif type_list[i] == 'int':
             while switch:
-                if row[i].isdigit():
+                if row[i].isdigit() or row[i] == '':
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
         elif type_list[i] == 'in':
             while switch:
-                if row[i] == 'in' or row[i] == 'out':
+                if row[i] == 'in' or row[i] == 'out' or row[i] == '':
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
         elif type_list[i] == 'day':
             while switch:
-                if row[i].isdigit() and 0 < int(row[i]) < 32:
+                if row[i].isdigit() and 0 < int(row[i]) < 32 or row[i] == '':
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
                     row[i] = new_answear[0]
         elif type_list[i] == 'month':
             while switch:
-                if row[i].isdigit() and 0 < int(row[i]) < 13:
+                if row[i].isdigit() and 0 < int(row[i]) < 13 or row[i] == '':
                     switch = False
                 else:
                     new_answear = ui.get_inputs([title_list[i]], 'Wrong input')
